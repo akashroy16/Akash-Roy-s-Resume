@@ -1,5 +1,5 @@
-/* DEFAULT DARK THEME */
-body {
+/* CSS VARIABLES FOR THEMES */
+:root {
   --bg-color: #07182d;
   --header-bg: #061220;
   --card-bg: #0d2443;
@@ -9,31 +9,32 @@ body {
   --accent: #00d8ff;
   --input-bg: #061220;
   --input-border: #1d4f8a;
-  
-  background-color: var(--bg-color) !important;
-  color: var(--text-color) !important;
-  line-height: 1.6;
-  font-family: Arial, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 0;
-  padding: 0;
 }
 
-/* LIGHT THEME OVERRIDE */
 body.light-theme {
-  --bg-color: #f1f5f9;
+  --bg-color: #f8fafc;
   --header-bg: #ffffff;
   --card-bg: #ffffff;
   --card-border: #cbd5e1;
   --text-color: #0f172a;
   --text-muted: #64748b;
   --accent: #0284c7;
-  --input-bg: #f8fafc;
+  --input-bg: #f1f5f9;
   --input-border: #cbd5e1;
 }
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  line-height: 1.6;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header {
@@ -46,6 +47,7 @@ header {
   padding: 15px 5%;
   background: var(--header-bg);
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
 }
 
 nav a {
@@ -138,6 +140,7 @@ h2 { text-align: center; margin-bottom: 25px; color: var(--accent); }
   padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--card-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .meta { color: var(--text-muted); font-size: 0.85rem; margin: 5px 0; }
@@ -172,7 +175,6 @@ h2 { text-align: center; margin-bottom: 25px; color: var(--accent); }
   font-weight: bold;
 }
 
-/* Timeline */
 .timeline {
   display: flex;
   flex-direction: column;
@@ -197,7 +199,6 @@ h2 { text-align: center; margin-bottom: 25px; color: var(--accent); }
   font-weight: bold;
 }
 
-/* Forms */
 .contact-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -219,7 +220,6 @@ input, textarea {
 .status-box { margin-top: 10px; padding: 8px; border-radius: 6px; display: none; }
 .status-box.success { display: block; background: #166534; color: #dcfce7; }
 
-/* Chatbox Widget */
 .chatbox-wrapper {
   position: fixed;
   bottom: 20px;
@@ -240,8 +240,8 @@ input, textarea {
 }
 
 .chat-window {
-  width: 300px;
-  height: 380px;
+  width: 320px;
+  height: 400px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 12px;
@@ -294,6 +294,7 @@ input, textarea {
   background: var(--input-bg);
   align-self: flex-start;
   border: 1px solid var(--card-border);
+  color: var(--text-color);
 }
 
 .user-msg {
