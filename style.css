@@ -1,14 +1,409 @@
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#07182d;color:#fff;line-height:1.6}
-header{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:18px 8%;background:#061220}
-nav a{color:#fff;text-decoration:none;margin-left:18px}
-span{color:#00d8ff}.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px}
-.image-box{width:220px;height:220px;border-radius:50%;padding:8px;background:linear-gradient(45deg,#00d8ff,#005eff);box-shadow:0 0 30px #00d8ff}
-.image-box img{width:100%;height:100%;border-radius:50%;object-fit:cover}
-.btn{display:inline-block;background:#00d8ff;color:#fff;padding:12px 28px;border-radius:30px;text-decoration:none;margin-top:20px}
-section{padding:80px 8%}h2{text-align:center;margin-bottom:25px;color:#00d8ff}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.card{background:#0d2443;padding:20px;border-radius:12px;border:1px solid #1d4f8a}
-ul{max-width:700px;margin:auto}li{margin:10px 0}
-footer{text-align:center;padding:20px;background:#061220}
-@media(max-width:700px){header{flex-direction:column}nav{margin-top:10px}.hero h1{font-size:2rem}}
+/* CSS Variables for Day/Night Theme Switcher */
+:root {
+  --bg-color: #07182d;
+  --header-bg: #061220;
+  --card-bg: #0d2443;
+  --card-border: #1d4f8a;
+  --text-color: #ffffff;
+  --text-muted: #a0aec0;
+  --accent: #00d8ff;
+  --accent-hover: #0099ff;
+  --input-bg: #061220;
+  --input-border: #1d4f8a;
+}
+
+[data-theme="light"] {
+  --bg-color: #f4f7fb;
+  --header-bg: #ffffff;
+  --card-bg: #ffffff;
+  --card-border: #cbd5e1;
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --accent: #0284c7;
+  --accent-hover: #0369a1;
+  --input-bg: #f8fafc;
+  --input-border: #cbd5e1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background: var(--header-bg);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+span {
+  color: var(--accent);
+}
+
+.theme-btn {
+  background: var(--card-bg);
+  color: var(--accent);
+  border: 1px solid var(--card-border);
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hero {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.image-box {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  padding: 6px;
+  background: linear-gradient(45deg, var(--accent), #005eff);
+  box-shadow: 0 0 25px var(--accent);
+  margin-bottom: 15px;
+}
+
+.image-box img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  margin-top: 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--text-color);
+}
+
+.btn-sm {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-top: 10px;
+}
+
+section {
+  padding: 60px 8%;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--accent);
+  font-size: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 22px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.meta {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin: 6px 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.badge-work { background: #0284c7; color: #fff; }
+.badge-club { background: #16a34a; color: #fff; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.tag-py { background: #3776ab; color: #fff; }
+.tag-java { background: #e76f51; color: #fff; }
+.tag-js { background: #f7df1e; color: #000; }
+
+.card-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Timeline for News Section */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.news-card {
+  background: var(--card-bg);
+  border-left: 5px solid var(--accent);
+  border-top: 1px solid var(--card-border);
+  border-right: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+  padding: 18px 22px;
+  border-radius: 8px;
+}
+
+.news-date {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Contact & Forms */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.error-msg {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 3px;
+}
+
+.status-box {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  display: none;
+  font-size: 0.9rem;
+}
+
+.status-box.success {
+  display: block;
+  background: #166534;
+  color: #dcfce7;
+}
+
+.rating-stars {
+  font-size: 1.5rem;
+  color: #f59e0b;
+  cursor: pointer;
+}
+
+/* Chatbox Widget */
+.chatbox-wrapper {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 2000;
+}
+
+.chat-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.chat-window {
+  width: 320px;
+  height: 420px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 65px;
+  right: 0;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.chat-window.hidden {
+  display: none;
+}
+
+.chat-header {
+  background: var(--header-bg);
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--card-border);
+  font-weight: bold;
+}
+
+.chat-header button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.chat-logs {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-msg {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  max-width: 85%;
+}
+
+.bot-msg {
+  background: var(--input-bg);
+  align-self: flex-start;
+  border: 1px solid var(--card-border);
+}
+
+.user-msg {
+  background: var(--accent);
+  color: #fff;
+  align-self: flex-end;
+}
+
+.chat-input-area {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid var(--card-border);
+  gap: 5px;
+}
+
+.chat-input-area input {
+  flex: 1;
+}
+
+.chat-input-area button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: var(--header-bg);
+  border-top: 1px solid var(--card-border);
+  font-size: 0.9rem;
+}
+
+@media(max-width:768px){
+  header { flex-direction: column; gap: 10px; text-align: center; }
+  nav { justify-content: center; }
+  section { padding: 40px 5%; }
+}
