@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
 
-  // 1. DAY / NIGHT TOGGLE FUNCTIONALITY
+  // 1. DAY / NIGHT TOGGLE
   const themeBtn = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
   const themeText = document.getElementById('theme-text');
@@ -9,54 +9,141 @@ window.addEventListener('DOMContentLoaded', () => {
     themeBtn.addEventListener('click', () => {
       document.body.classList.toggle('light-theme');
       const isLight = document.body.classList.contains('light-theme');
-      
-      if (isLight) {
-        themeIcon.className = 'fas fa-moon';
-        themeText.textContent = 'Night Mode';
-      } else {
-        themeIcon.className = 'fas fa-sun';
-        themeText.textContent = 'Day Mode';
-      }
+      themeIcon.className = isLight ? 'fas fa-moon' : 'fas fa-sun';
+      themeText.textContent = isLight ? 'Night Mode' : 'Day Mode';
     });
   }
 
-  // 2. CONTACT FORM VALIDATION
+  // 2. DYNAMIC TYPING EFFECT
+  const typingText = document.getElementById('typing-text');
+  if (typingText) {
+    const roles = [
+      "Software Engineering Student",
+      "AI & Data Science Enthusiast",
+      "Machine Learning Engineer",
+      "Competitive Programmer"
+    ];
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+      const currentRole = roles[roleIndex];
+      if (isDeleting) {
+        typingText.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typingText.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let speed = isDeleting ? 50 : 100;
+
+      if (!isDeleting && charIndex === currentRole.length) {
+        speed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        speed = 500;
+      }
+
+      setTimeout(type, speed);
+    }
+    type();
+  }
+
+  // 3. SCROLL REVEAL ANIMATION
+  const fadeElements = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  fadeElements.forEach(el => observer.observe(el));
+
+  // 4. PARTICLES CANVAS BACKGROUND
+  const canvas = document.getElementById('particles-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 1;
+        this.vy = (Math.random() - 0.5) * 1;
+        this.radius = Math.random() * 2 + 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+      draw() {
+        const isLight = document.body.classList.contains('light-theme');
+        ctx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.4)' : 'rgba(0, 216, 255, 0.4)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const isLight = document.body.classList.contains('light-theme');
+      
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 120) {
+            ctx.strokeStyle = isLight 
+              ? `rgba(2, 132, 199, ${1 - dist / 120})` 
+              : `rgba(0, 216, 255, ${1 - dist / 120})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  }
+
+  // 5. CONTACT FORM VALIDATION
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const message = document.getElementById('message').value.trim();
-      
-      const nameErr = document.getElementById('name-error');
-      const emailErr = document.getElementById('email-error');
-      const messageErr = document.getElementById('message-error');
       const statusBox = document.getElementById('form-status');
-      
-      nameErr.textContent = '';
-      emailErr.textContent = '';
-      messageErr.textContent = '';
-      
-      let valid = true;
 
-      if (!name) {
-        nameErr.textContent = 'Name is required.';
-        valid = false;
-      }
-
-      if (!email || !email.includes('@')) {
-        emailErr.textContent = 'Valid email required.';
-        valid = false;
-      }
-
-      if (!message) {
-        messageErr.textContent = 'Message is required.';
-        valid = false;
-      }
-
-      if (valid) {
+      if (name && email.includes('@') && message) {
         statusBox.textContent = 'Thank you! Message sent successfully.';
         statusBox.className = 'status-box success';
         contactForm.reset();
@@ -64,24 +151,12 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. FEEDBACK FORM
-  const feedbackForm = document.getElementById('feedback-form');
-  if (feedbackForm) {
-    feedbackForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const fbStatus = document.getElementById('feedback-status');
-      fbStatus.textContent = 'Feedback submitted. Thank you!';
-      fbStatus.className = 'status-box success';
-      document.getElementById('feedback-text').value = '';
-    });
-  }
-
-  // 4. SITE DATA KNOWLEDGE-BASE AI CHATBOT
+  // 6. SITE DATA AI CHATBOT
   const siteKnowledge = {
-    about: "Akash Roy is a Software Engineering student at Daffodil International University with a CGPA of 3.70. He is passionate about Python, Java, Data Science, Machine Learning, and complex problem solving.",
-    education: "Akash is pursuing a B.Sc. in Software Engineering at Daffodil International University (CGPA 3.70, May 2024 - Dec 2028). He also completed the Harvard-founded Aspire Leadership Program with a 95/100 grade.",
-    experience: "1. Machine Learning Intern at FlyRank AI (Jun 2026 - Present, Remote).\n2. Founder & Lead AI Engineer at FALabs - Fyntrix AI Labs (May 2026 - Present, Dhaka).\n3. Executive Member at DIU Software Engineering Club.\n4. Member at SQATC-DIU.",
-    projects: "1. FingerCanvas (MediaPipe hand tracking digital whiteboard).\n2. AI-Powered Push-Up Analyzer & Counter.\n3. DunkinDonut Dashboard (Java OOP GUI project).\n4. NLP Audit of Digital Implementation.",
+    about: "Akash Roy is a Software Engineering student at Daffodil International University with a CGPA of 3.70. Passionate about Python, Java, Data Science, Machine Learning, and complex problem solving.",
+    education: "Akash is pursuing a B.Sc. in Software Engineering at Daffodil International University (CGPA 3.70, May 2024 - Dec 2028). Completed the Harvard-founded Aspire Leadership Program with a 95/100 grade.",
+    experience: "1. Machine Learning Intern at FlyRank AI (Jun 2026 - Present).\n2. Founder & Lead AI Engineer at FALabs - Fyntrix AI Labs (May 2026 - Present).\n3. Executive Member at DIU Software Engineering Club.\n4. Member at SQATC-DIU.",
+    projects: "1. FingerCanvas (MediaPipe hand tracking whiteboard).\n2. AI-Powered Push-Up Analyzer & Counter.\n3. DunkinDonut Dashboard (Java OOP GUI).\n4. NLP Audit of Digital Implementation.",
     skills: "Python, Java, C Programming, Machine Learning, Data Science & Analysis, Git & GitHub.",
     contact: "Email: arcairo5800@gmail.com | Phone: +8801303704514 | Location: Savar, Dhaka, Bangladesh.",
     certifications: "1. Ethics of AI (University of Helsinki)\n2. Software Development for Enterprise Systems (Open University)\n3. Diploma in GDPR & Data Protection (Alison)."
@@ -100,32 +175,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function generateResponse(query) {
       const q = query.toLowerCase();
-      
-      if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
-        return "Hello! I am Akash's AI Assistant. Ask me about his skills, projects, work experience, CGPA, certifications, or contact details!";
-      }
-      if (q.includes('about') || q.includes('who is')) {
-        return siteKnowledge.about;
-      }
-      if (q.includes('cgpa') || q.includes('education') || q.includes('university') || q.includes('study') || q.includes('degree')) {
-        return siteKnowledge.education;
-      }
-      if (q.includes('experience') || q.includes('job') || q.includes('intern') || q.includes('work') || q.includes('falabs') || q.includes('flyrank')) {
-        return siteKnowledge.experience;
-      }
-      if (q.includes('project') || q.includes('fingercanvas') || q.includes('push-up') || q.includes('dunkin') || q.includes('nlp')) {
-        return siteKnowledge.projects;
-      }
-      if (q.includes('skill') || q.includes('python') || q.includes('java') || q.includes('c') || q.includes('machine learning')) {
-        return siteKnowledge.skills;
-      }
-      if (q.includes('certificate') || q.includes('certification') || q.includes('helsinki') || q.includes('gdpr')) {
-        return siteKnowledge.certifications;
-      }
-      if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('address') || q.includes('reach')) {
-        return siteKnowledge.contact;
-      }
-
+      if (q.includes('hello') || q.includes('hi') || q.includes('hey')) return "Hello! Ask me about Akash's skills, projects, work experience, CGPA, certifications, or contact details!";
+      if (q.includes('about') || q.includes('who is')) return siteKnowledge.about;
+      if (q.includes('cgpa') || q.includes('education') || q.includes('university')) return siteKnowledge.education;
+      if (q.includes('experience') || q.includes('job') || q.includes('work') || q.includes('falabs')) return siteKnowledge.experience;
+      if (q.includes('project') || q.includes('fingercanvas') || q.includes('push-up')) return siteKnowledge.projects;
+      if (q.includes('skill') || q.includes('python') || q.includes('java')) return siteKnowledge.skills;
+      if (q.includes('certificate') || q.includes('gdpr') || q.includes('helsinki')) return siteKnowledge.certifications;
+      if (q.includes('contact') || q.includes('email') || q.includes('phone')) return siteKnowledge.contact;
       return "I can answer queries regarding Akash's background. Try asking about his 'projects', 'education', 'skills', 'experience', or 'contact details'.";
     }
 
@@ -151,9 +208,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     chatSendBtn.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') sendMessage();
-    });
+    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
   }
 
 });
