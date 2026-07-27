@@ -53,7 +53,79 @@ window.addEventListener('DOMContentLoaded', () => {
     type();
   }
 
-  // 3. PARTICLES CANVAS BACKGROUND
+  // 3. ANIMATED METRICS COUNTER
+  const counters = document.querySelectorAll('.counter');
+  let counterAnimated = false;
+
+  function runCounters() {
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const isFloat = target % 1 !== 0;
+      let count = 0;
+      const speed = target / 50;
+
+      const updateCount = () => {
+        count += speed;
+        if (count < target) {
+          counter.innerText = isFloat ? count.toFixed(2) : Math.ceil(count);
+          setTimeout(updateCount, 30);
+        } else {
+          counter.innerText = isFloat ? target.toFixed(2) : target + '+';
+        }
+      };
+      updateCount();
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    const metricsSection = document.getElementById('metrics');
+    if (metricsSection && !counterAnimated) {
+      const pos = metricsSection.getBoundingClientRect();
+      if (pos.top < window.innerHeight && pos.bottom >= 0) {
+        runCounters();
+        counterAnimated = true;
+      }
+    }
+  });
+
+  // 4. INTERACTIVE PROJECT FILTER
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectItems = document.querySelectorAll('.project-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+
+      projectItems.forEach(item => {
+        const categories = item.getAttribute('data-category');
+        if (filter === 'all' || categories.includes(filter)) {
+          item.classList.remove('hidden-project');
+        } else {
+          item.classList.add('hidden-project');
+        }
+      });
+    });
+  });
+
+  // 5. COPY EMAIL TO CLIPBOARD TOOLTIP
+  const copyBtn = document.getElementById('copy-email-btn');
+  const copyTooltip = document.getElementById('copy-tooltip');
+
+  if (copyBtn && copyTooltip) {
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('arcairo5800@gmail.com').then(() => {
+        copyTooltip.style.display = 'inline-block';
+        setTimeout(() => {
+          copyTooltip.style.display = 'none';
+        }, 2000);
+      });
+    });
+  }
+
+  // 6. PARTICLES CANVAS BACKGROUND
   const canvas = document.getElementById('particles-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
@@ -121,7 +193,7 @@ window.addEventListener('DOMContentLoaded', () => {
     animateParticles();
   }
 
-  // 4. CONTACT FORM EMAIL SENDER (EmailJS Integration)
+  // 7. CONTACT FORM EMAIL SENDER (EmailJS Integration)
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
@@ -150,50 +222,89 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. DYNAMIC LIVE FEEDBACK SYSTEM
-  const feedbackForm = document.getElementById('feedback-form');
-  const feedbackList = document.getElementById('feedback-list');
+  // 8. GLOBAL REALTIME FEEDBACK SYSTEM (Firebase)
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
 
-  // Load existing feedback from local storage on load
-  function loadFeedback() {
-    if (!feedbackList) return;
-    feedbackList.innerHTML = '';
-    const storedFeedback = JSON.parse(localStorage.getItem('portfolio_feedback') || '[]');
-    
-    storedFeedback.forEach((item) => {
-      const card = document.createElement('div');
-      card.className = 'feedback-item';
-      card.innerHTML = `<div class="feedback-author">${item.name}</div><p>${item.text}</p>`;
-      feedbackList.appendChild(card);
-    });
-  }
-  loadFeedback();
+  if (typeof firebase !== 'undefined') {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.database();
+    const feedbackRef = db.ref('feedbacks');
 
-  if (feedbackForm) {
-    feedbackForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nameInput = document.getElementById('feedback-name')?.value.trim() || 'Anonymous';
-      const textInput = document.getElementById('feedback-text')?.value.trim();
-      const statusBox = document.getElementById('feedback-status');
+    const feedbackForm = document.getElementById('feedback-form');
+    const feedbackList = document.getElementById('feedback-list');
 
-      if (textInput) {
-        const newFeedback = { name: nameInput, text: textInput };
-        const storedFeedback = JSON.parse(localStorage.getItem('portfolio_feedback') || '[]');
-        storedFeedback.unshift(newFeedback); // Add newest first
-        localStorage.setItem('portfolio_feedback', JSON.stringify(storedFeedback));
-
-        loadFeedback();
-
-        if (statusBox) {
-          statusBox.textContent = 'Feedback posted successfully below!';
-          statusBox.className = 'status-box success';
+    if (feedbackList) {
+      feedbackRef.on('value', (snapshot) => {
+        feedbackList.innerHTML = '';
+        const data = snapshot.val();
+        
+        if (data) {
+          const feedbackArray = Object.values(data).reverse();
+          feedbackArray.forEach((item) => {
+            const card = document.createElement('div');
+            card.className = 'feedback-item';
+            card.innerHTML = `
+              <div class="feedback-author">${escapeHtml(item.name)}</div>
+              <p>${escapeHtml(item.text)}</p>
+            `;
+            feedbackList.appendChild(card);
+          });
+        } else {
+          feedbackList.innerHTML = '<p class="meta" style="text-align:center;">No feedback yet. Be the first to leave one!</p>';
         }
-        feedbackForm.reset();
-      }
-    });
+      });
+    }
+
+    if (feedbackForm) {
+      feedbackForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameInput = document.getElementById('feedback-name')?.value.trim() || 'Anonymous';
+        const textInput = document.getElementById('feedback-text')?.value.trim();
+        const statusBox = document.getElementById('feedback-status');
+
+        if (textInput) {
+          feedbackRef.push({
+            name: nameInput,
+            text: textInput,
+            timestamp: Date.now()
+          }, (error) => {
+            if (error) {
+              if (statusBox) {
+                statusBox.textContent = 'Error posting feedback. Please check Firebase rules.';
+                statusBox.className = 'status-box error';
+              }
+            } else {
+              if (statusBox) {
+                statusBox.textContent = 'Feedback posted publicly!';
+                statusBox.className = 'status-box success';
+              }
+              feedbackForm.reset();
+            }
+          });
+        }
+      });
+    }
   }
 
-  // 6. SITE DATA AI CHATBOT
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;");
+  }
+
+  // 9. SITE DATA AI CHATBOT
   const siteKnowledge = {
     about: "Akash Roy is a Software Engineering student at Daffodil International University with a CGPA of 3.70. Passionate about Python, Java, Data Science, Machine Learning, and complex problem solving.",
     education: "Akash is pursuing a B.Sc. in Software Engineering at Daffodil International University (CGPA 3.70, May 2024 - Dec 2028). Completed the Harvard-founded Aspire Leadership Program with a 95/100 grade.",
