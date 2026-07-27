@@ -1,21 +1,23 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Ensure code runs after DOM is ready
+window.addEventListener('DOMContentLoaded', () => {
 
-  // 1. DAY / NIGHT THEME SWITCHER
-  const themeToggleBtn = document.getElementById('theme-toggle');
+  // 1. DAY / NIGHT TOGGLE FUNCTIONALITY
+  const themeBtn = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
   const themeText = document.getElementById('theme-text');
 
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-      const currentTheme = document.body.getAttribute('data-theme');
-      if (currentTheme === 'light') {
-        document.body.setAttribute('data-theme', 'dark');
-        themeIcon.className = 'fas fa-sun';
-        themeText.textContent = 'Day Mode';
-      } else {
-        document.body.setAttribute('data-theme', 'light');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+      
+      const isLight = document.body.classList.contains('light-theme');
+      
+      if (isLight) {
         themeIcon.className = 'fas fa-moon';
         themeText.textContent = 'Night Mode';
+      } else {
+        themeIcon.className = 'fas fa-sun';
+        themeText.textContent = 'Day Mode';
       }
     });
   }
@@ -26,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      const name = document.getElementById('name');
-      const email = document.getElementById('email');
-      const message = document.getElementById('message');
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
       
       const nameErr = document.getElementById('name-error');
       const emailErr = document.getElementById('email-error');
@@ -41,17 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
       
       let valid = true;
 
-      if (!name.value.trim()) {
+      if (!name) {
         nameErr.textContent = 'Name is required.';
         valid = false;
       }
 
-      if (!email.value.trim() || !email.value.includes('@')) {
+      if (!email || !email.includes('@')) {
         emailErr.textContent = 'Valid email required.';
         valid = false;
       }
 
-      if (!message.value.trim()) {
+      if (!message) {
         messageErr.textContent = 'Message is required.';
         valid = false;
       }
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. FEEDBACK SUBMISSION
+  // 3. FEEDBACK FORM
   const feedbackForm = document.getElementById('feedback-form');
   if (feedbackForm) {
     feedbackForm.addEventListener('submit', (e) => {
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. AI CHATBOT
+  // 4. AI CHATBOT FUNCTIONALITY
   const chatToggleBtn = document.getElementById('chat-toggle-btn');
   const chatWindow = document.getElementById('chat-window');
   const chatCloseBtn = document.getElementById('chat-close-btn');
@@ -97,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const text = chatInput.value.trim();
       if (!text) return;
 
-      // Append User Msg
+      // User Message
       const userMsg = document.createElement('div');
       userMsg.className = 'chat-msg user-msg';
       userMsg.textContent = text;
@@ -106,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
       chatInput.value = '';
       chatLogs.scrollTop = chatLogs.scrollHeight;
 
-      // Bot Answer Logic
+      // Response Logic
       setTimeout(() => {
         const botMsg = document.createElement('div');
         botMsg.className = 'chat-msg bot-msg';
@@ -115,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (q.includes('hello') || q.includes('hi')) {
           botMsg.textContent = "Hello! Ask me about Akash's skills, projects, email, or education!";
         } else if (q.includes('project') || q.includes('github') || q.includes('code')) {
-          botMsg.textContent = "Akash built projects like FingerCanvas, AI Push-Up Analyzer, DunkinDonut Dashboard, and NLP Audit tools!";
+          botMsg.textContent = "Akash built FingerCanvas, AI Push-Up Analyzer, DunkinDonut Dashboard, and NLP Audit tools!";
         } else if (q.includes('skill') || q.includes('python') || q.includes('java')) {
           botMsg.textContent = "Akash specializes in Python, Java, Machine Learning, Data Science, and Computer Vision!";
         } else if (q.includes('cgpa') || q.includes('grade') || q.includes('university') || q.includes('education')) {
@@ -123,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (q.includes('email') || q.includes('contact') || q.includes('phone')) {
           botMsg.textContent = "Reach out to Akash at arcairo5800@gmail.com or +8801303704514.";
         } else {
-          botMsg.textContent = "I'm Akash's bot assistant! You can ask me about his projects, skills, email, or education.";
+          botMsg.textContent = "I'm Akash's bot assistant! Feel free to ask about his projects, skills, email, or education.";
         }
 
         chatLogs.appendChild(botMsg);
