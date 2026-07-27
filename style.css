@@ -112,7 +112,7 @@ nav a:hover {
 }
 
 /* ==========================================================================
-   SECTIONS & HERO
+   HERO SECTION & TYPING CURSOR
    ========================================================================== */
 section {
   padding: 4rem 8%;
@@ -159,7 +159,7 @@ section h2 {
   margin-bottom: 1rem;
 }
 
-/* Blinking Cursor Line Fix */
+/* Blinking Cursor Line */
 .cursor {
   display: inline-block;
   color: var(--accent-color);
@@ -219,13 +219,24 @@ section h2 {
   color: var(--accent-color);
 }
 
+.btn-sm {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
 .badge {
   display: inline-block;
   font-size: 0.75rem;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-weight: 600;
-  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .badge-work {
@@ -304,7 +315,7 @@ section h2 {
 }
 
 /* ==========================================================================
-   TIMELINE
+   TIMELINE & NEWS
    ========================================================================== */
 .timeline {
   display: flex;
@@ -397,6 +408,13 @@ input:focus, textarea:focus {
 .status-box {
   margin-top: 0.8rem;
   font-size: 0.9rem;
+}
+
+#feedback-list {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 /* ==========================================================================
@@ -502,7 +520,7 @@ input:focus, textarea:focus {
 }
 
 /* ==========================================================================
-   FOOTER & ANIMATIONS
+   FOOTER & FADE ANIMATION
    ========================================================================== */
 footer {
   text-align: center;
