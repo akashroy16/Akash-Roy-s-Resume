@@ -159,6 +159,66 @@ body.light-theme h2 { color: #0284c7; }
   gap: 20px;
 }
 
+/* METRICS COUNTER GRID */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  text-align: center;
+}
+
+.metric-card h3 {
+  font-size: 2.5rem;
+  color: #00d8ff;
+  margin-bottom: 5px;
+}
+body.light-theme .metric-card h3 { color: #0284c7; }
+
+/* PROJECT FILTER BUTTONS */
+.filter-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: #0d2443;
+  color: #fff;
+  border: 1px solid #1d4f8a;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+body.light-theme .filter-btn {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: #00d8ff;
+  color: #fff;
+  border-color: #00d8ff;
+}
+
+body.light-theme .filter-btn.active {
+  background: #0284c7;
+  color: #fff;
+  border-color: #0284c7;
+}
+
+.project-item.hidden-project {
+  display: none !important;
+}
+
 .card {
   background: rgba(13, 36, 67, 0.85);
   padding: 20px;
@@ -197,9 +257,11 @@ body.light-theme .meta { color: #64748b; }
   border-radius: 12px;
   font-weight: bold;
   margin-bottom: 8px;
+  margin-right: 4px;
 }
 .tag-py { background: #3776ab; color: #fff; }
 .tag-java { background: #e76f51; color: #fff; }
+.tag-ml { background: #9333ea; color: #fff; }
 
 .card-link {
   display: inline-block;
@@ -209,6 +271,26 @@ body.light-theme .meta { color: #64748b; }
   font-weight: bold;
 }
 body.light-theme .card-link { color: #0284c7; }
+
+/* COPY EMAIL BUTTON & TOOLTIP */
+.copy-btn {
+  background: none;
+  border: none;
+  color: #00d8ff;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 1rem;
+}
+
+.copy-tooltip {
+  display: none;
+  font-size: 0.75rem;
+  background: #166534;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 5px;
+}
 
 .timeline {
   display: flex;
@@ -269,7 +351,7 @@ body.light-theme input, body.light-theme textarea {
 .status-box.success { display: block; background: #166534; color: #dcfce7; }
 .status-box.error { display: block; background: #991b1b; color: #fee2e2; }
 
-/* FEEDBACK DISPLAY STYLES */
+/* FEEDBACK CARD STYLES */
 .feedback-item {
   background: rgba(13, 36, 67, 0.85);
   padding: 15px;
