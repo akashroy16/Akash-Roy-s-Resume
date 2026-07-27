@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const themeIcon = document.getElementById('theme-icon');
   const themeText = document.getElementById('theme-text');
 
-  if (themeBtn) {
+  if (themeBtn && themeIcon && themeText) {
     themeBtn.addEventListener('click', () => {
       document.body.classList.toggle('light-theme');
       const isLight = document.body.classList.contains('light-theme');
@@ -53,19 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
     type();
   }
 
-  // 3. SCROLL REVEAL ANIMATION
-  const fadeElements = document.querySelectorAll('.fade-in');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  fadeElements.forEach(el => observer.observe(el));
-
-  // 4. PARTICLES CANVAS BACKGROUND
+  // 3. PARTICLES CANVAS BACKGROUND
   const canvas = document.getElementById('particles-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
@@ -133,20 +121,36 @@ window.addEventListener('DOMContentLoaded', () => {
     animateParticles();
   }
 
-  // 5. CONTACT FORM VALIDATION
+  // 4. CONTACT FORM VALIDATION
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
+      const name = document.getElementById('name')?.value.trim();
+      const email = document.getElementById('email')?.value.trim();
+      const message = document.getElementById('message')?.value.trim();
       const statusBox = document.getElementById('form-status');
 
-      if (name && email.includes('@') && message) {
+      if (name && email && email.includes('@') && message && statusBox) {
         statusBox.textContent = 'Thank you! Message sent successfully.';
         statusBox.className = 'status-box success';
         contactForm.reset();
+      }
+    });
+  }
+
+  // 5. FEEDBACK FORM VALIDATION
+  const feedbackForm = document.getElementById('feedback-form');
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const feedbackText = document.getElementById('feedback-text')?.value.trim();
+      const feedbackStatus = document.getElementById('feedback-status');
+
+      if (feedbackText && feedbackStatus) {
+        feedbackStatus.textContent = 'Thank you for your feedback!';
+        feedbackStatus.className = 'status-box success';
+        feedbackForm.reset();
       }
     });
   }
@@ -169,7 +173,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const chatInput = document.getElementById('chat-input');
   const chatLogs = document.getElementById('chat-logs');
 
-  if (chatToggleBtn && chatWindow) {
+  if (chatToggleBtn && chatWindow && chatCloseBtn && chatSendBtn && chatInput && chatLogs) {
     chatToggleBtn.addEventListener('click', () => chatWindow.classList.toggle('hidden'));
     chatCloseBtn.addEventListener('click', () => chatWindow.classList.add('hidden'));
 
