@@ -7,7 +7,10 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="dark-theme">
+
+  <!-- BACKGROUND PARTICLES CANVAS -->
+  <canvas id="particles-canvas"></canvas>
 
   <!-- HEADER -->
   <header>
@@ -24,18 +27,17 @@
       <a href="#contact">Contact</a>
       <a href="#feedback">Feedback</a>
     </nav>
-    <!-- Day / Night Toggle Button -->
     <button id="theme-toggle" class="theme-btn" type="button">
       <i class="fas fa-sun" id="theme-icon"></i> <span id="theme-text">Day Mode</span>
     </button>
   </header>
 
   <!-- HERO -->
-  <section id="home" class="hero">
+  <section id="home" class="hero fade-in">
     <div class="image-box"><img src="profile.jpg" alt="Akash Roy"></div>
     <h3>Hello, I'm</h3>
     <h1>Akash <span>Roy</span></h1>
-    <h2>Software Engineering Student | AI & Data Science Enthusiast</h2>
+    <h2><span id="typing-text"></span><span class="cursor">|</span></h2>
     <p>Research Enthusiast | Harvard ALP 2026 | Data Analyst | Machine Learning Enthusiast | Competitive Programmer</p>
     <div class="hero-btns">
       <a class="btn" href="resume.pdf" download><i class="fas fa-download"></i> Download CV</a>
@@ -44,7 +46,7 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="about">
+  <section id="about" class="fade-in">
     <h2>About Me</h2>
     <div class="card">
       <p>Dedicated and analytical Software Engineering student at Daffodil International University with CGPA 3.70. Passionate about Python, Java, Data Science, Machine Learning, and solving real-world complex problems.</p>
@@ -52,10 +54,10 @@
   </section>
 
   <!-- EXPERIENCE -->
-  <section id="experience">
+  <section id="experience" class="fade-in">
     <h2>Experience & Roles</h2>
     <div class="grid">
-      <div class="card">
+      <div class="card fade-in">
         <span class="badge badge-work">Internship</span>
         <h3>Machine Learning Intern</h3>
         <h4>FlyRank AI</h4>
@@ -63,7 +65,7 @@
         <p>Focusing on Machine Learning models and AI optimization algorithms.</p>
       </div>
 
-      <div class="card">
+      <div class="card fade-in">
         <span class="badge badge-work">Full-time</span>
         <h3>Founder & Lead AI Engineer</h3>
         <h4>FALabs - Fyntrix AI Labs</h4>
@@ -71,7 +73,7 @@
         <p>Leading research and engineering initiatives in applied AI and software solutions.</p>
       </div>
 
-      <div class="card">
+      <div class="card fade-in">
         <span class="badge badge-club">Part-time</span>
         <h3>Executive Member</h3>
         <h4>DIU Software Engineering Club</h4>
@@ -79,7 +81,7 @@
         <p>Organizing competitive coding events, workshops, and student tech activities.</p>
       </div>
 
-      <div class="card">
+      <div class="card fade-in">
         <span class="badge badge-club">Part-time</span>
         <h3>Member</h3>
         <h4>Software Quality Assurance & Testing Club (SQATC-DIU)</h4>
@@ -90,31 +92,31 @@
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects">
+  <section id="projects" class="fade-in">
     <h2>Featured Projects</h2>
     <div class="grid">
-      <div class="card">
+      <div class="card fade-in">
         <h3>FingerCanvas</h3>
         <span class="tag tag-py">Python</span>
         <p>Webcam-based digital whiteboard powered by MediaPipe hand tracking. Point to draw, hover to pick tools.</p>
         <a href="https://github.com/akashroy16/FingerCanvas" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
       </div>
 
-      <div class="card">
+      <div class="card fade-in">
         <h3>AI-Powered Push-Up Analyzer & Counter</h3>
         <span class="tag tag-py">Python</span>
         <p>Real-time Computer Vision application using MediaPipe Pose estimation to track physical exercise form.</p>
         <a href="https://github.com/akashroy16/AI-Powered-Push-Up-Analyzer-Counter" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
       </div>
 
-      <div class="card">
+      <div class="card fade-in">
         <h3>DunkinDonut Dashboard</h3>
         <span class="tag tag-java">Java</span>
         <p>OOP course project demonstrating core OOP pillars and GUI management.</p>
         <a href="https://github.com/akashroy16/DunkinDonut-Dashboard" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
       </div>
 
-      <div class="card">
+      <div class="card fade-in">
         <h3>NLP Audit of Digital Implementation</h3>
         <span class="tag tag-py">Python</span>
         <p>Audit using NLP to map disconnection between viral addiction recovery content and clinical evidence.</p>
@@ -124,23 +126,23 @@
   </section>
 
   <!-- NEWS SECTION -->
-  <section id="news">
+  <section id="news" class="fade-in">
     <h2>News & Updates</h2>
     <div class="timeline">
-      <div class="news-card">
+      <div class="news-card fade-in">
         <div class="news-date"><i class="far fa-calendar-alt"></i> July 2026</div>
         <h3><i class="fab fa-github"></i> Updated FingerCanvas & ChessOnCanvas</h3>
         <p>Pushed gesture smoothing updates to <strong>FingerCanvas</strong> and updated repository documentation on GitHub.</p>
         <a href="https://github.com/akashroy16/FingerCanvas" target="_blank" class="btn-sm"><i class="fas fa-external-link-alt"></i> Open Repository</a>
       </div>
 
-      <div class="news-card">
+      <div class="news-card fade-in">
         <div class="news-date"><i class="far fa-calendar-alt"></i> June 2026</div>
         <h3><i class="fab fa-linkedin"></i> Started ML Internship at FlyRank AI</h3>
         <p>Joined <strong>FlyRank AI</strong> as a Remote Machine Learning Intern focusing on generative AI pipelines.</p>
       </div>
 
-      <div class="news-card">
+      <div class="news-card fade-in">
         <div class="news-date"><i class="far fa-calendar-alt"></i> May 2026</div>
         <h3><i class="fas fa-rocket"></i> Founded FALabs - Fyntrix AI Labs</h3>
         <p>Established <strong>FALabs</strong> as Lead AI Engineer to drive real-world AI research in Dhaka.</p>
@@ -149,30 +151,30 @@
   </section>
 
   <!-- SKILLS -->
-  <section id="skills">
+  <section id="skills" class="fade-in">
     <h2>Skills</h2>
     <div class="grid">
-      <div class="card">Python</div>
-      <div class="card">Java</div>
-      <div class="card">C Programming</div>
-      <div class="card">Machine Learning</div>
-      <div class="card">Data Science & Analysis</div>
-      <div class="card">Git & GitHub</div>
+      <div class="card fade-in">Python</div>
+      <div class="card fade-in">Java</div>
+      <div class="card fade-in">C Programming</div>
+      <div class="card fade-in">Machine Learning</div>
+      <div class="card fade-in">Data Science & Analysis</div>
+      <div class="card fade-in">Git & GitHub</div>
     </div>
   </section>
 
   <!-- EDUCATION -->
-  <section id="education">
+  <section id="education" class="fade-in">
     <h2>Education</h2>
     <div class="grid">
-      <div class="card">
+      <div class="card fade-in">
         <h3>B.Sc. in Software Engineering</h3>
         <p><b>Daffodil International University (DIU)</b></p>
         <p class="meta">May 2024 – Dec 2028</p>
         <p><b>CGPA:</b> 3.70</p>
       </div>
 
-      <div class="card">
+      <div class="card fade-in">
         <h3>Aspire Leadership Program</h3>
         <p><b>Aspire Institute (Harvard Founded)</b></p>
         <p class="meta">Feb 2026 – Apr 2026</p>
@@ -182,27 +184,27 @@
   </section>
 
   <!-- CERTIFICATES -->
-  <section id="certificates">
+  <section id="certificates" class="fade-in">
     <h2>Certifications</h2>
     <div class="grid">
-      <div class="card"><h3>Ethics of AI</h3><p>University of Helsinki (2026)</p></div>
-      <div class="card"><h3>Software Development for Enterprise Systems</h3><p>The Open University (2026)</p></div>
-      <div class="card"><h3>Diploma in GDPR & Data Protection</h3><p>Alison (2026)</p></div>
+      <div class="card fade-in"><h3>Ethics of AI</h3><p>University of Helsinki (2026)</p></div>
+      <div class="card fade-in"><h3>Software Development for Enterprise Systems</h3><p>The Open University (2026)</p></div>
+      <div class="card fade-in"><h3>Diploma in GDPR & Data Protection</h3><p>Alison (2026)</p></div>
     </div>
   </section>
 
   <!-- CONTACT FORM -->
-  <section id="contact">
+  <section id="contact" class="fade-in">
     <h2>Contact Me</h2>
     <div class="contact-wrapper">
-      <div class="card">
+      <div class="card fade-in">
         <h3>Contact Info</h3>
         <p><i class="fas fa-envelope"></i> arcairo5800@gmail.com</p>
         <p><i class="fas fa-phone"></i> +8801303704514</p>
         <p><i class="fas fa-map-marker-alt"></i> Savar, Dhaka, Bangladesh</p>
       </div>
 
-      <div class="card">
+      <div class="card fade-in">
         <h3>Send Message</h3>
         <form id="contact-form">
           <div class="form-group">
@@ -225,7 +227,7 @@
   </section>
 
   <!-- FEEDBACK -->
-  <section id="feedback">
+  <section id="feedback" class="fade-in">
     <h2>Feedback</h2>
     <div class="card">
       <form id="feedback-form">
