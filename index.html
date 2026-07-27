@@ -25,7 +25,7 @@
       <a href="#feedback">Feedback</a>
     </nav>
     <!-- Day / Night Toggle Button -->
-    <button id="theme-toggle" class="theme-btn">
+    <button id="theme-toggle" class="theme-btn" type="button">
       <i class="fas fa-sun" id="theme-icon"></i> <span id="theme-text">Day Mode</span>
     </button>
   </header>
@@ -123,7 +123,7 @@
     </div>
   </section>
 
-  <!-- NEWS SECTION (AMAR RELATED NEWS) -->
+  <!-- NEWS SECTION -->
   <section id="news">
     <h2>News & Updates (আমার খবর)</h2>
     <div class="timeline">
@@ -238,28 +238,27 @@
 
   <!-- AI CHATBOT WIDGET -->
   <div class="chatbox-wrapper">
-    <button id="chat-toggle-btn" class="chat-btn">
+    <button id="chat-toggle-btn" class="chat-btn" type="button">
       <i class="fas fa-robot"></i>
     </button>
 
     <div id="chat-window" class="chat-window hidden">
       <div class="chat-header">
         <span>Akash's AI Assistant</span>
-        <button id="chat-close-btn">&times;</button>
+        <button id="chat-close-btn" type="button">&times;</button>
       </div>
       <div id="chat-logs" class="chat-logs">
         <div class="chat-msg bot-msg">Hi! 👋 Ask me about Akash's projects, skills, CGPA, or contact details!</div>
       </div>
       <div class="chat-input-area">
         <input type="text" id="chat-input" placeholder="Type a message...">
-        <button id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+        <button id="chat-send-btn" type="button"><i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
   </div>
 
   <footer>© 2026 Akash Roy</footer>
 
-  <!-- SCRIPT IMPORT -->
   <script src="script.js"></script>
 </body>
 </html>
