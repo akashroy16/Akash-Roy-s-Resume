@@ -1,74 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akash Roy | Portfolio</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akash Roy | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<header><h2>Akash <span>Roy</span></h2>
-<nav>
-<a href="#home">Home</a><a href="#about">About</a><a href="#education">Education</a>
-<a href="#skills">Skills</a><a href="#achievements">Achievements</a>
-<a href="#certificates">Certificates</a><a href="#contact">Contact</a>
-</nav></header>
 
-<section id="home" class="hero">
-<div class="image-box"><img src="profile.jpg" alt="Profile"></div>
-<h3>Hello, I'm</h3>
-<h1>Akash <span>Roy</span></h1>
-<h2>Software Engineering Student</h2>
-<p>Dedicated Software Engineering student passionate about AI, Machine Learning, Python, Java and software development.</p>
-<a class="btn" href="resume.pdf">Download CV</a>
-</section>
+  <!-- HEADER / NAVIGATION -->
+  <header>
+    <h2>Akash <span>Roy</span></h2>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#news">News</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#contact">Contact</a>
+      <a href="#feedback">Feedback</a>
+    </nav>
+    <!-- Day / Night Mode Toggle -->
+    <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+      <i class="fas fa-moon" id="theme-icon"></i> <span id="theme-text">Night</span>
+    </button>
+  </header>
 
-<section id="about"><h2>About Me</h2>
-<div class="card">
-<p>Dedicated and analytical Software Engineering student with CGPA 3.70. Passionate about Python, Java, Data Science, Machine Learning and solving real-world problems. Experienced in presentations, teamwork, leadership and research-oriented activities.</p>
-</div></section>
+  <!-- HERO SECTION -->
+  <section id="home" class="hero">
+    <div class="image-box"><img src="profile.jpg" alt="Akash Roy Profile Picture"></div>
+    <h3>Hello, I'm</h3>
+    <h1>Akash <span>Roy</span></h1>
+    <h2>Software Engineering Student | AI & Data Science Enthusiast</h2>
+    <p>Research Enthusiast | Harvard ALP 2026 | Data Analyst | Machine Learning Enthusiast | Competitive Programmer</p>
+    <div class="hero-btns">
+      <a class="btn" href="resume.pdf" download><i class="fas fa-download"></i> Download CV</a>
+      <a class="btn btn-secondary" href="https://github.com/akashroy16" target="_blank"><i class="fab fa-github"></i> GitHub Profile</a>
+    </div>
+  </section>
 
-<section id="education"><h2>Education</h2>
-<div class="grid">
-<div class="card"><h3>B.Sc. Software Engineering</h3><p>Daffodil International University</p><p>2024–Present</p><p><b>CGPA:</b> 3.70</p></div>
-<div class="card"><h3>Higher Secondary Certificate</h3><p>Shahid Smriti College</p><p>2020–2022</p><p><b>GPA:</b> 4.83</p></div>
-<div class="card"><h3>Secondary School Certificate</h3><p>Malikhali Secondary School</p><p>2018–2020</p><p><b>GPA:</b> 4.83</p></div>
-</div></section>
+  <!-- ABOUT SECTION -->
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="card">
+      <p>Dedicated and analytical Software Engineering student at Daffodil International University with a CGPA of 3.70. Passionate about Python, Java, Data Science, Machine Learning, and solving real-world complex problems. Active in research, competitive programming, and lead AI roles.</p>
+    </div>
+  </section>
 
-<section id="skills"><h2>Skills</h2>
-<div class="grid">
-<div class="card">Python</div><div class="card">Java</div><div class="card">C Programming</div>
-<div class="card">Machine Learning</div><div class="card">Data Science</div>
-<div class="card">Problem Solving</div><div class="card">Debugging</div>
-<div class="card">Leadership</div><div class="card">Communication</div><div class="card">MS Office</div>
-</div></section>
+  <!-- EXPERIENCE SECTION (LinkedIn Data) -->
+  <section id="experience">
+    <h2>Experience & Roles</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="badge badge-work">Internship</span>
+        <h3>Machine Learning Intern</h3>
+        <h4>FlyRank AI</h4>
+        <p class="meta"><i class="far fa-calendar-alt"></i> Jun 2026 – Present | Remote, Bangladesh</p>
+        <p>Focusing on Machine Learning models and AI optimization algorithms.</p>
+      </div>
 
-<section id="achievements"><h2>Achievements</h2>
-<div class="grid">
-<div class="card"><h3>Top 10 Finalist</h3><p>Inter-University Video Presentation Competition – Live AMR Dashboard.</p></div>
-<div class="card"><h3>Programming Contest</h3><p>Code Trap Contest Participant.</p></div>
-<div class="card"><h3>Science Olympiad</h3><p>DIU Science Olympiad Participant.</p></div>
-<div class="card"><h3>Cyber Security Workshop</h3><p>Human Hacking Through Social Engineering.</p></div>
-</div></section>
+      <div class="card">
+        <span class="badge badge-work">Full-time</span>
+        <h3>Founder & Lead AI Engineer</h3>
+        <h4>FALabs - Fyntrix AI Labs</h4>
+        <p class="meta"><i class="far fa-calendar-alt"></i> May 2026 – Present | On-site, Dhaka</p>
+        <p>Leading research and engineering initiatives in applied AI and software solutions.</p>
+      </div>
 
-<section id="certificates"><h2>Certifications</h2>
-<ul>
-<li>Google for Education</li>
-<li>IBM Python for Data Science</li>
-<li>IBM Statistics 101</li>
-<li>IBM Data Science Foundations</li>
-<li>Simplilearn OOP in Java</li>
-<li>Aspire Leaders Program</li>
-<li>LEAD Academy Volunteerism</li>
-</ul></section>
+      <div class="card">
+        <span class="badge badge-club">Part-time</span>
+        <h3>Executive Member</h3>
+        <h4>DIU Software Engineering Club</h4>
+        <p class="meta"><i class="far fa-calendar-alt"></i> Dec 2024 – Present | On-site, Dhaka</p>
+        <p>Organizing competitive coding events, workshops, and student tech activities.</p>
+      </div>
 
-<section id="contact"><h2>Contact</h2>
-<div class="card">
-<p><b>Email:</b> arcairo5800@gmail.com</p>
-<p><b>Phone:</b> +8801303704514</p>
-<p><b>Location:</b> Savar, Dhaka, Bangladesh</p>
-<p><b>LinkedIn:</b> linkedin.com/in/akash-roy226</p>
-</div></section>
+      <div class="card">
+        <span class="badge badge-club">Part-time</span>
+        <h3>Member</h3>
+        <h4>Software Quality Assurance & Testing Club (SQATC-DIU)</h4>
+        <p class="meta"><i class="far fa-calendar-alt"></i> Apr 2026 – Present | On-site, Dhaka</p>
+        <p>Engaging in automated testing frameworks, bug tracking, and software quality practices.</p>
+      </div>
+    </div>
+  </section>
 
-<footer>© 2026 Akash Roy</footer>
-</body></html>
+  <!-- PROJECTS SECTION (Linked to GitHub) -->
+  <section id="projects">
+    <h2>Featured Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>FingerCanvas</h3>
+        <span class="tag tag-py">Python</span>
+        <p>Webcam-based digital whiteboard powered by MediaPipe hand tracking. Point to draw, hover to pick tools with no stylus needed.</p>
+        <a href="https://github.com/akashroy16/FingerCanvas" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
+      </div>
+
+      <div class="card">
+        <h3>AI-Powered Push-Up Analyzer & Counter</h3>
+        <span class="tag tag-py">Python</span>
+        <p>Real-time Computer Vision application in Python using MediaPipe Pose estimation model to track and analyze physical exercise form.</p>
+        <a href="https://github.com/akashroy16/AI-Powered-Push-Up-Analyzer-Counter" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
+      </div>
+
+      <div class="card">
+        <h3>DunkinDonut Dashboard</h3>
+        <span class="tag tag-java">Java</span>
+        <p>Object-Oriented Programming (OOP) course project demonstrating 4 core OOP pillars and full GUI management.</p>
+        <a href="https://github.com/akashroy16/DunkinDonut-Dashboard" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
+      </div>
+
+      <div class="card">
+        <h3>NLP Audit of Digital Implementation</h3>
+        <span class="tag tag-py">Python</span>
+        <p>Audit using NLP to map disconnection between viral addiction recovery content and clinical evidence-based practices.</p>
+        <a href="https://github.com/akashroy16/Audit-of-Digital-Implementation-Using-NLP-to-Map-the-Disconnection-Between...." target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
+      </div>
+
+      <div class="card">
+        <h3>ChessOnCanvas</h3>
+        <span class="tag tag-js">JavaScript / Canvas</span>
+        <p>Interactive web-based canvas chess board with custom move highlighting and clean user controls.</p>
+        <a href="https://github.com/akashroy16/Chessoncanvas" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
+      </div>
+
+      <div class="card">
+        <h3>Sleep Effect on Academic Result</h3>
+        <span class="tag tag-py">Python</span>
+        <p>Research data visualization analyzing student sleep habits against academic outcomes using Python graphs.</p>
+        <a href="https://github.com/akashroy16/Sleeping-Effect-on-academic-result-python-codes-for-5-graphs-" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS SECTION (Amar Related News & Updates) -->
+  <section id="news">
+    <h2>News & Updates (আমার খবর)</h2>
+    <div class="timeline">
+
+      <div class="news-card">
+        <div class="news-date"><i class="far fa-calendar-alt"></i> July 2026</div>
+        <h3><i class="fab fa-github"></i> Updated FingerCanvas & ChessOnCanvas Repositories</h3>
+        <p>Pushed new feature updates to <strong>FingerCanvas</strong> (MediaPipe gesture smoothing) and <strong>ChessOnCanvas</strong> on GitHub. Check out the latest commit history!</p>
+        <a href="https://github.com/akashroy16/FingerCanvas" target="_blank" class="btn-sm"><i class="fas fa-external-link-alt"></i> Open FingerCanvas Repo</a>
+      </div>
+
+      <div class="news-card">
+        <div class="news-date"><i class="far fa-calendar-alt"></i> June 2026</div>
+        <h3><i class="fab fa-linkedin"></i> Started ML Internship at FlyRank AI</h3>
+        <p>Officially joined <strong>FlyRank AI</strong> as a Remote Machine Learning Intern focusing on generative models and data pipelines.</p>
+      </div>
+
+      <div class="news-card">
+        <div class="news-date"><i class="far fa-calendar-alt"></i> June 2026</div>
+        <h3><i class="fas fa-certificate"></i> Completed Ethics of AI Certification</h3>
+        <p>Earned official certification in <strong>Ethics of AI</strong> from the <em>University of Helsinki</em> and completed Software Development for Enterprise Systems with The Open University.</p>
+      </div>
+
+      <div class="news-card">
+        <div class="news-date"><i class="far fa-calendar-alt"></i> May 2026</div>
+        <h3><i class="fas fa-rocket"></i> Founded FALabs - Fyntrix AI Labs</h3>
+        <p>Established <strong>FALabs - Fyntrix AI Labs</strong> as Founder & Lead AI Engineer to drive student innovation in Dhaka.</p>
+      </div>
+
+      <div class="news-card">
+        <div class="news-date"><i class="far fa-calendar-alt"></i> April 2026</div>
+        <h3><i class="fab fa-github"></i> Published DunkinDonut Dashboard & NLP Audit Repos</h3>
+        <p>Released full open-source Java OOP architecture for DunkinDonut Dashboard and uploaded the NLP clinical mapping analysis scripts.</p>
+      </div>
+
+      <div class="news-card">
+        <div class="news-date"><i class="far fa-calendar-alt"></i> April 2026</div>
+        <h3><i class="fas fa-graduation-cap"></i> Completed Harvard Aspire Leaders Program</h3>
+        <p>Graduated from the <strong>Aspire Leaders Program (2026)</strong> with a top score grade of 95/100!</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="grid">
+      <div class="card">Python</div>
+      <div class="card">Java</div>
+      <div class="card">C Programming</div>
+      <div class="card">Machine Learning</div>
+      <div class="card">Data Science & Analysis</div>
+      <div class="card">Computer Vision (MediaPipe)</div>
+      <div class="card">Natural Language Processing (NLP)</div>
+      <div class="card">Problem Solving & Debugging</div>
+      <div class="card">Leadership & Teamwork</div>
+      <div class="card">Git & GitHub</div>
+    </div>
+  </section>
+
+  <!-- EDUCATION SECTION -->
+  <section id="education">
+    <h2>Education</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>B.Sc. in Software Engineering (SWE)</h3>
+        <p><b>Daffodil International University (DIU)</b></p>
+        <p class="meta">May 2024 – Dec 2028</p>
+        <p><b>CGPA:</b> 3.70</p>
+        <p><i>Activities:</i> Software Engineering Club, Science Olympiad, Competitive Programming</p>
+      </div>
+
+      <div class="card">
+        <h3>Aspire Leadership Program</h3>
+        <p><b>Aspire Institute (Harvard Founded)</b></p>
+        <p class="meta">Feb 2026 – Apr 2026</p>
+        <p><b>Grade:</b> 95 / 100</p>
+      </div>
+
+      <div class="card">
+        <h3>Higher Secondary Certificate (HSC)</h3>
+        <p><b>Shahid Smriti College</b></p>
+        <p class="meta">Jan 2020 – Dec 2022</p>
+        <p><b>GPA:</b> 4.83 / 5.00</p>
+      </div>
+
+      <div class="card">
+        <h3>Secondary School Certificate (SSC)</h3>
+        <p><b>Malikhali Secondary School</b></p>
+        <p class="meta">Jan 2019 – Dec 2020</p>
+        <p><b>GPA:</b> 4.83 / 5.00</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS SECTION -->
+  <section id="certificates">
+    <h2>Licenses & Certifications</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Ethics of AI</h3>
+        <p>University of Helsinki (Issued Jun 2026)</p>
+      </div>
+      <div class="card">
+        <h3>Software Development for Enterprise Systems</h3>
+        <p>The Open University (Issued Jun 2026)</p>
+      </div>
+      <div class="card">
+        <h3>Build Faster With Claude - Live Coding</h3>
+        <p>Simplilearn (2026)</p>
+      </div>
+      <div class="card">
+        <h3>Diploma in GDPR & Data Protection</h3>
+        <p>Alison (Credential ID: 6084-55872477)</p>
+      </div>
+      <div class="card">
+        <h3>Python Data Analysis Bootcamp (Pandas, Seaborn, Plotly)</h3>
+        <p>Udemy (Issued Feb 2026)</p>
+      </div>
+      <div class="card">
+        <h3>Certified Volunteerism</h3>
+        <p>LEAD Academy (Issued Feb 2026)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT & EMAIL SECTION WITH VALIDATION -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <div class="contact-wrapper">
+      <div class="card contact-info">
+        <h3>Get In Touch</h3>
+        <p><i class="fas fa-envelope"></i> <b>Email:</b> arcairo5800@gmail.com</p>
+        <p><i class="fas fa-phone"></i> <b>Phone:</b> +8801303704514</p>
+        <p><i class="fas fa-map-marker-alt"></i> <b>Location:</b> Savar, Dhaka, Bangladesh</p>
+        <p><i class="fab fa-linkedin"></i> <b>LinkedIn:</b> <a href="https://linkedin.com/in/akash-roy226" target="_blank" style="color:var(--accent);">linkedin.com/in/akash-roy226</a></p>
+        <p><i class="fab fa-github"></i> <b>GitHub:</b> <a href="https://github.com/akashroy16" target="_blank" style="color:var(--accent);">github.com/akashroy16</a></p>
+      </div>
+
+      <!-- Verified Contact & Email Form -->
+      <div class="card contact-form-card">
+        <h3>Send Me a Message</h3>
+        <form id="contact-form" novalidate>
+          <div class="form-group">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" placeholder="Enter your full name">
+            <span class="error-msg" id="name-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Your Email Address *</label>
+            <input type="email" id="email" placeholder="example@domain.com">
+            <span class="error-msg" id="email-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <input type="text" id="subject" placeholder="e.g., Internship / Collaboration">
+            <span class="error-msg" id="subject-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" rows="4" placeholder="Write your message here..."></textarea>
+            <span class="error-msg" id="message-error"></span>
+          </div>
+
+          <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+          <div id="form-status" class="status-box"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEEDBACK SECTION -->
+  <section id="feedback">
+    <h2>Portfolio Feedback</h2>
+    <div class="card feedback-card">
+      <p>Your feedback helps me improve! Leave a quick rating or suggestion below.</p>
+      <form id="feedback-form">
+        <div class="rating-stars">
+          <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+          <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+        </div>
+        <input type="hidden" id="star-rating-val" value="5">
+
+        <div class="form-group" style="margin-top:15px;">
+          <label for="fb-category">Category</label>
+          <select id="fb-category" class="form-control">
+            <option value="Design">UI / UX Design</option>
+            <option value="Projects">Projects & News</option>
+            <option value="General">General Review</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <textarea id="feedback-text" rows="3" placeholder="Write your comments or suggestions here..."></textarea>
+        </div>
+
+        <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Submit Feedback</button>
+        <div id="feedback-status" class="status-box"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- CUSTOMIZED CHATBOX FOR AKASH ROY -->
+  <div class="chatbox-wrapper">
+    <button id="chat-toggle-btn" class="chat-btn">
+      <i class="fas fa-comments"></i>
+    </button>
+
+    <div id="chat-window" class="chat-window hidden">
+      <div class="chat-header">
+        <div class="chat-title">
+          <i class="fas fa-robot"></i> Akash's Assistant
+        </div>
+        <button id="chat-close-btn">&times;</button>
+      </div>
+      <div id="chat-logs" class="chat-logs">
+        <div class="chat-msg bot-msg">
+          Hi! 👋 I am Akash's personal assistant. How can I help you today? You can ask about his skills, projects, or contact info!
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Type a message (e.g. projects, email)...">
+        <button id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 Akash Roy | Built with HTML, CSS & JavaScript</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
