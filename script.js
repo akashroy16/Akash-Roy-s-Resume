@@ -121,35 +121,73 @@ window.addEventListener('DOMContentLoaded', () => {
     animateParticles();
   }
 
-  // 4. CONTACT FORM VALIDATION
+  // 4. CONTACT FORM EMAIL SENDER (EmailJS Integration)
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('name')?.value.trim();
-      const email = document.getElementById('email')?.value.trim();
-      const message = document.getElementById('message')?.value.trim();
       const statusBox = document.getElementById('form-status');
+      const submitBtn = document.getElementById('contact-submit-btn');
 
-      if (name && email && email.includes('@') && message && statusBox) {
-        statusBox.textContent = 'Thank you! Message sent successfully.';
-        statusBox.className = 'status-box success';
-        contactForm.reset();
-      }
+      if (submitBtn) submitBtn.textContent = 'Sending...';
+
+      // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with EmailJS keys
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', contactForm)
+        .then(() => {
+          if (statusBox) {
+            statusBox.textContent = 'Message sent to Akash\'s email successfully!';
+            statusBox.className = 'status-box success';
+          }
+          contactForm.reset();
+          if (submitBtn) submitBtn.textContent = 'Send Message';
+        }, (error) => {
+          if (statusBox) {
+            statusBox.textContent = 'Failed to send message. Please try again.';
+            statusBox.className = 'status-box error';
+          }
+          if (submitBtn) submitBtn.textContent = 'Send Message';
+        });
     });
   }
 
-  // 5. FEEDBACK FORM VALIDATION
+  // 5. DYNAMIC LIVE FEEDBACK SYSTEM
   const feedbackForm = document.getElementById('feedback-form');
+  const feedbackList = document.getElementById('feedback-list');
+
+  // Load existing feedback from local storage on load
+  function loadFeedback() {
+    if (!feedbackList) return;
+    feedbackList.innerHTML = '';
+    const storedFeedback = JSON.parse(localStorage.getItem('portfolio_feedback') || '[]');
+    
+    storedFeedback.forEach((item) => {
+      const card = document.createElement('div');
+      card.className = 'feedback-item';
+      card.innerHTML = `<div class="feedback-author">${item.name}</div><p>${item.text}</p>`;
+      feedbackList.appendChild(card);
+    });
+  }
+  loadFeedback();
+
   if (feedbackForm) {
     feedbackForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const feedbackText = document.getElementById('feedback-text')?.value.trim();
-      const feedbackStatus = document.getElementById('feedback-status');
+      const nameInput = document.getElementById('feedback-name')?.value.trim() || 'Anonymous';
+      const textInput = document.getElementById('feedback-text')?.value.trim();
+      const statusBox = document.getElementById('feedback-status');
 
-      if (feedbackText && feedbackStatus) {
-        feedbackStatus.textContent = 'Thank you for your feedback!';
-        feedbackStatus.className = 'status-box success';
+      if (textInput) {
+        const newFeedback = { name: nameInput, text: textInput };
+        const storedFeedback = JSON.parse(localStorage.getItem('portfolio_feedback') || '[]');
+        storedFeedback.unshift(newFeedback); // Add newest first
+        localStorage.setItem('portfolio_feedback', JSON.stringify(storedFeedback));
+
+        loadFeedback();
+
+        if (statusBox) {
+          statusBox.textContent = 'Feedback posted successfully below!';
+          statusBox.className = 'status-box success';
+        }
         feedbackForm.reset();
       }
     });
