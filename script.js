@@ -224,7 +224,76 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     8. AI CHATBOT INTERACTION
+     8. FEEDBACK FORM SUBMISSION & REAL-TIME LIST RENDER
+     ========================================================================== */
+  const feedbackForm = document.getElementById("feedback-form");
+  const feedbackNameInput = document.getElementById("feedback-name");
+  const feedbackTextInput = document.getElementById("feedback-text");
+  const feedbackStatus = document.getElementById("feedback-status");
+  const feedbackList = document.getElementById("feedback-list");
+
+  if (feedbackForm) {
+    feedbackForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nameVal = feedbackNameInput.value.trim() || "Anonymous Visitor";
+      const textVal = feedbackTextInput.value.trim();
+
+      if (!textVal) return;
+
+      if (feedbackStatus) {
+        feedbackStatus.style.color = "#00d8ff";
+        feedbackStatus.textContent = "Submitting feedback...";
+      }
+
+      setTimeout(() => {
+        // Create new feedback card element
+        const card = document.createElement("div");
+        card.className = "card fade-in visible";
+        card.style.maxWidth = "650px";
+        card.style.margin = "0 auto 1rem auto";
+
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: var(--accent-color); font-size: 1.1rem;"><i class="fas fa-user-circle"></i> ${escapeHTML(nameVal)}</h4>
+            <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="far fa-clock"></i> ${dateStr}</span>
+          </div>
+          <p style="line-height: 1.5; color: var(--text-color);">${escapeHTML(textVal)}</p>
+        `;
+
+        // Prepend new feedback to the top of the list
+        if (feedbackList) {
+          feedbackList.insertBefore(card, feedbackList.firstChild);
+        }
+
+        if (feedbackStatus) {
+          feedbackStatus.style.color = "#10b981";
+          feedbackStatus.textContent = "Thank you! Your feedback has been posted below.";
+        }
+
+        feedbackForm.reset();
+      }, 500);
+    });
+  }
+
+  // Helper to prevent HTML injection in feedback inputs
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag)
+    );
+  }
+
+  /* ==========================================================================
+     9. AI CHATBOT INTERACTION
      ========================================================================== */
   const chatToggleBtn = document.getElementById("chat-toggle-btn");
   const chatWindow = document.getElementById("chat-window");
