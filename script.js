@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     themeToggle.addEventListener("click", () => {
       document.body.classList.toggle("light-theme");
       const isLight = document.body.classList.contains("light-theme");
-      
+
       if (themeIcon) {
         themeIcon.className = isLight ? "fas fa-moon" : "fas fa-sun";
       }
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
-        
+
         if (entry.target.id === "metrics" && !animatedCounters) {
           animatedCounters = true;
           counters.forEach(counter => {
@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackForm = document.getElementById("feedback-form");
 
   if (feedbackForm) {
-    feedbackForm.addEventListener("submit", function (e) {
+    feedbackForm.onsubmit = function (e) {
       e.preventDefault();
 
       const nameInput = document.getElementById("feedback-name");
@@ -237,12 +237,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const statusBox = document.getElementById("feedback-status");
       const listContainer = document.getElementById("feedback-list");
 
-      const nameVal = nameInput && nameInput.value.trim() ? nameInput.value.trim() : "Anonymous Visitor";
+      const nameVal = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : "Anonymous Visitor";
       const textVal = textInput ? textInput.value.trim() : "";
 
-      if (!textVal) return;
+      if (!textVal) return false;
 
-      // Render new Feedback Card immediately
+      // Create and style new feedback card
       const card = document.createElement("div");
       card.className = "card visible";
       card.style.cssText = "max-width: 650px; margin: 0 auto 1rem auto; padding: 1.2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;";
@@ -271,7 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       feedbackForm.reset();
-    });
+      return false;
+    };
   }
 
   function escapeHTML(str) {
