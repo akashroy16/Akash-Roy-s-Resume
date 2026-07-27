@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body data-theme="dark">
 
-  <!-- HEADER / NAVIGATION -->
+  <!-- HEADER -->
   <header>
     <h2>Akash <span>Roy</span></h2>
     <nav>
@@ -24,15 +24,15 @@
       <a href="#contact">Contact</a>
       <a href="#feedback">Feedback</a>
     </nav>
-    <!-- Day / Night Mode Toggle -->
-    <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
-      <i class="fas fa-moon" id="theme-icon"></i> <span id="theme-text">Night</span>
+    <!-- Day / Night Toggle Button -->
+    <button id="theme-toggle" class="theme-btn">
+      <i class="fas fa-sun" id="theme-icon"></i> <span id="theme-text">Day Mode</span>
     </button>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- HERO -->
   <section id="home" class="hero">
-    <div class="image-box"><img src="profile.jpg" alt="Akash Roy Profile Picture"></div>
+    <div class="image-box"><img src="profile.jpg" alt="Akash Roy"></div>
     <h3>Hello, I'm</h3>
     <h1>Akash <span>Roy</span></h1>
     <h2>Software Engineering Student | AI & Data Science Enthusiast</h2>
@@ -43,15 +43,15 @@
     </div>
   </section>
 
-  <!-- ABOUT SECTION -->
+  <!-- ABOUT -->
   <section id="about">
     <h2>About Me</h2>
     <div class="card">
-      <p>Dedicated and analytical Software Engineering student at Daffodil International University with a CGPA of 3.70. Passionate about Python, Java, Data Science, Machine Learning, and solving real-world complex problems. Active in research, competitive programming, and lead AI roles.</p>
+      <p>Dedicated and analytical Software Engineering student at Daffodil International University with CGPA 3.70. Passionate about Python, Java, Data Science, Machine Learning, and solving real-world complex problems.</p>
     </div>
   </section>
 
-  <!-- EXPERIENCE SECTION (LinkedIn Data) -->
+  <!-- EXPERIENCE -->
   <section id="experience">
     <h2>Experience & Roles</h2>
     <div class="grid">
@@ -89,100 +89,66 @@
     </div>
   </section>
 
-  <!-- PROJECTS SECTION (Linked to GitHub) -->
+  <!-- PROJECTS -->
   <section id="projects">
     <h2>Featured Projects</h2>
     <div class="grid">
       <div class="card">
         <h3>FingerCanvas</h3>
         <span class="tag tag-py">Python</span>
-        <p>Webcam-based digital whiteboard powered by MediaPipe hand tracking. Point to draw, hover to pick tools with no stylus needed.</p>
+        <p>Webcam-based digital whiteboard powered by MediaPipe hand tracking. Point to draw, hover to pick tools.</p>
         <a href="https://github.com/akashroy16/FingerCanvas" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
       </div>
 
       <div class="card">
         <h3>AI-Powered Push-Up Analyzer & Counter</h3>
         <span class="tag tag-py">Python</span>
-        <p>Real-time Computer Vision application in Python using MediaPipe Pose estimation model to track and analyze physical exercise form.</p>
+        <p>Real-time Computer Vision application using MediaPipe Pose estimation to track physical exercise form.</p>
         <a href="https://github.com/akashroy16/AI-Powered-Push-Up-Analyzer-Counter" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
       </div>
 
       <div class="card">
         <h3>DunkinDonut Dashboard</h3>
         <span class="tag tag-java">Java</span>
-        <p>Object-Oriented Programming (OOP) course project demonstrating 4 core OOP pillars and full GUI management.</p>
+        <p>OOP course project demonstrating core OOP pillars and GUI management.</p>
         <a href="https://github.com/akashroy16/DunkinDonut-Dashboard" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
       </div>
 
       <div class="card">
         <h3>NLP Audit of Digital Implementation</h3>
         <span class="tag tag-py">Python</span>
-        <p>Audit using NLP to map disconnection between viral addiction recovery content and clinical evidence-based practices.</p>
+        <p>Audit using NLP to map disconnection between viral addiction recovery content and clinical evidence.</p>
         <a href="https://github.com/akashroy16/Audit-of-Digital-Implementation-Using-NLP-to-Map-the-Disconnection-Between...." target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
-      </div>
-
-      <div class="card">
-        <h3>ChessOnCanvas</h3>
-        <span class="tag tag-js">JavaScript / Canvas</span>
-        <p>Interactive web-based canvas chess board with custom move highlighting and clean user controls.</p>
-        <a href="https://github.com/akashroy16/Chessoncanvas" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
-      </div>
-
-      <div class="card">
-        <h3>Sleep Effect on Academic Result</h3>
-        <span class="tag tag-py">Python</span>
-        <p>Research data visualization analyzing student sleep habits against academic outcomes using Python graphs.</p>
-        <a href="https://github.com/akashroy16/Sleeping-Effect-on-academic-result-python-codes-for-5-graphs-" target="_blank" class="card-link"><i class="fab fa-github"></i> View Repository</a>
       </div>
     </div>
   </section>
 
-  <!-- NEWS SECTION (Amar Related News & Updates) -->
+  <!-- NEWS SECTION (AMAR RELATED NEWS) -->
   <section id="news">
     <h2>News & Updates (আমার খবর)</h2>
     <div class="timeline">
-
       <div class="news-card">
         <div class="news-date"><i class="far fa-calendar-alt"></i> July 2026</div>
-        <h3><i class="fab fa-github"></i> Updated FingerCanvas & ChessOnCanvas Repositories</h3>
-        <p>Pushed new feature updates to <strong>FingerCanvas</strong> (MediaPipe gesture smoothing) and <strong>ChessOnCanvas</strong> on GitHub. Check out the latest commit history!</p>
-        <a href="https://github.com/akashroy16/FingerCanvas" target="_blank" class="btn-sm"><i class="fas fa-external-link-alt"></i> Open FingerCanvas Repo</a>
+        <h3><i class="fab fa-github"></i> Updated FingerCanvas & ChessOnCanvas</h3>
+        <p>Pushed gesture smoothing updates to <strong>FingerCanvas</strong> and updated repository documentation on GitHub.</p>
+        <a href="https://github.com/akashroy16/FingerCanvas" target="_blank" class="btn-sm"><i class="fas fa-external-link-alt"></i> Open Repository</a>
       </div>
 
       <div class="news-card">
         <div class="news-date"><i class="far fa-calendar-alt"></i> June 2026</div>
         <h3><i class="fab fa-linkedin"></i> Started ML Internship at FlyRank AI</h3>
-        <p>Officially joined <strong>FlyRank AI</strong> as a Remote Machine Learning Intern focusing on generative models and data pipelines.</p>
-      </div>
-
-      <div class="news-card">
-        <div class="news-date"><i class="far fa-calendar-alt"></i> June 2026</div>
-        <h3><i class="fas fa-certificate"></i> Completed Ethics of AI Certification</h3>
-        <p>Earned official certification in <strong>Ethics of AI</strong> from the <em>University of Helsinki</em> and completed Software Development for Enterprise Systems with The Open University.</p>
+        <p>Joined <strong>FlyRank AI</strong> as a Remote Machine Learning Intern focusing on generative AI pipelines.</p>
       </div>
 
       <div class="news-card">
         <div class="news-date"><i class="far fa-calendar-alt"></i> May 2026</div>
         <h3><i class="fas fa-rocket"></i> Founded FALabs - Fyntrix AI Labs</h3>
-        <p>Established <strong>FALabs - Fyntrix AI Labs</strong> as Founder & Lead AI Engineer to drive student innovation in Dhaka.</p>
+        <p>Established <strong>FALabs</strong> as Lead AI Engineer to drive real-world AI research in Dhaka.</p>
       </div>
-
-      <div class="news-card">
-        <div class="news-date"><i class="far fa-calendar-alt"></i> April 2026</div>
-        <h3><i class="fab fa-github"></i> Published DunkinDonut Dashboard & NLP Audit Repos</h3>
-        <p>Released full open-source Java OOP architecture for DunkinDonut Dashboard and uploaded the NLP clinical mapping analysis scripts.</p>
-      </div>
-
-      <div class="news-card">
-        <div class="news-date"><i class="far fa-calendar-alt"></i> April 2026</div>
-        <h3><i class="fas fa-graduation-cap"></i> Completed Harvard Aspire Leaders Program</h3>
-        <p>Graduated from the <strong>Aspire Leaders Program (2026)</strong> with a top score grade of 95/100!</p>
-      </div>
-
     </div>
   </section>
 
-  <!-- SKILLS SECTION -->
+  <!-- SKILLS -->
   <section id="skills">
     <h2>Skills</h2>
     <div class="grid">
@@ -191,24 +157,19 @@
       <div class="card">C Programming</div>
       <div class="card">Machine Learning</div>
       <div class="card">Data Science & Analysis</div>
-      <div class="card">Computer Vision (MediaPipe)</div>
-      <div class="card">Natural Language Processing (NLP)</div>
-      <div class="card">Problem Solving & Debugging</div>
-      <div class="card">Leadership & Teamwork</div>
       <div class="card">Git & GitHub</div>
     </div>
   </section>
 
-  <!-- EDUCATION SECTION -->
+  <!-- EDUCATION -->
   <section id="education">
     <h2>Education</h2>
     <div class="grid">
       <div class="card">
-        <h3>B.Sc. in Software Engineering (SWE)</h3>
+        <h3>B.Sc. in Software Engineering</h3>
         <p><b>Daffodil International University (DIU)</b></p>
         <p class="meta">May 2024 – Dec 2028</p>
         <p><b>CGPA:</b> 3.70</p>
-        <p><i>Activities:</i> Software Engineering Club, Science Olympiad, Competitive Programming</p>
       </div>
 
       <div class="card">
@@ -217,163 +178,88 @@
         <p class="meta">Feb 2026 – Apr 2026</p>
         <p><b>Grade:</b> 95 / 100</p>
       </div>
-
-      <div class="card">
-        <h3>Higher Secondary Certificate (HSC)</h3>
-        <p><b>Shahid Smriti College</b></p>
-        <p class="meta">Jan 2020 – Dec 2022</p>
-        <p><b>GPA:</b> 4.83 / 5.00</p>
-      </div>
-
-      <div class="card">
-        <h3>Secondary School Certificate (SSC)</h3>
-        <p><b>Malikhali Secondary School</b></p>
-        <p class="meta">Jan 2019 – Dec 2020</p>
-        <p><b>GPA:</b> 4.83 / 5.00</p>
-      </div>
     </div>
   </section>
 
-  <!-- CERTIFICATIONS SECTION -->
+  <!-- CERTIFICATES -->
   <section id="certificates">
-    <h2>Licenses & Certifications</h2>
+    <h2>Certifications</h2>
     <div class="grid">
-      <div class="card">
-        <h3>Ethics of AI</h3>
-        <p>University of Helsinki (Issued Jun 2026)</p>
-      </div>
-      <div class="card">
-        <h3>Software Development for Enterprise Systems</h3>
-        <p>The Open University (Issued Jun 2026)</p>
-      </div>
-      <div class="card">
-        <h3>Build Faster With Claude - Live Coding</h3>
-        <p>Simplilearn (2026)</p>
-      </div>
-      <div class="card">
-        <h3>Diploma in GDPR & Data Protection</h3>
-        <p>Alison (Credential ID: 6084-55872477)</p>
-      </div>
-      <div class="card">
-        <h3>Python Data Analysis Bootcamp (Pandas, Seaborn, Plotly)</h3>
-        <p>Udemy (Issued Feb 2026)</p>
-      </div>
-      <div class="card">
-        <h3>Certified Volunteerism</h3>
-        <p>LEAD Academy (Issued Feb 2026)</p>
-      </div>
+      <div class="card"><h3>Ethics of AI</h3><p>University of Helsinki (2026)</p></div>
+      <div class="card"><h3>Software Development for Enterprise Systems</h3><p>The Open University (2026)</p></div>
+      <div class="card"><h3>Diploma in GDPR & Data Protection</h3><p>Alison (2026)</p></div>
     </div>
   </section>
 
-  <!-- CONTACT & EMAIL SECTION WITH VALIDATION -->
+  <!-- CONTACT FORM -->
   <section id="contact">
     <h2>Contact Me</h2>
     <div class="contact-wrapper">
-      <div class="card contact-info">
-        <h3>Get In Touch</h3>
-        <p><i class="fas fa-envelope"></i> <b>Email:</b> arcairo5800@gmail.com</p>
-        <p><i class="fas fa-phone"></i> <b>Phone:</b> +8801303704514</p>
-        <p><i class="fas fa-map-marker-alt"></i> <b>Location:</b> Savar, Dhaka, Bangladesh</p>
-        <p><i class="fab fa-linkedin"></i> <b>LinkedIn:</b> <a href="https://linkedin.com/in/akash-roy226" target="_blank" style="color:var(--accent);">linkedin.com/in/akash-roy226</a></p>
-        <p><i class="fab fa-github"></i> <b>GitHub:</b> <a href="https://github.com/akashroy16" target="_blank" style="color:var(--accent);">github.com/akashroy16</a></p>
+      <div class="card">
+        <h3>Contact Info</h3>
+        <p><i class="fas fa-envelope"></i> arcairo5800@gmail.com</p>
+        <p><i class="fas fa-phone"></i> +8801303704514</p>
+        <p><i class="fas fa-map-marker-alt"></i> Savar, Dhaka, Bangladesh</p>
       </div>
 
-      <!-- Verified Contact & Email Form -->
-      <div class="card contact-form-card">
-        <h3>Send Me a Message</h3>
-        <form id="contact-form" novalidate>
+      <div class="card">
+        <h3>Send Message</h3>
+        <form id="contact-form">
           <div class="form-group">
-            <label for="name">Your Name *</label>
-            <input type="text" id="name" placeholder="Enter your full name">
+            <input type="text" id="name" placeholder="Your Name">
             <span class="error-msg" id="name-error"></span>
           </div>
-
           <div class="form-group">
-            <label for="email">Your Email Address *</label>
-            <input type="email" id="email" placeholder="example@domain.com">
+            <input type="email" id="email" placeholder="Your Email">
             <span class="error-msg" id="email-error"></span>
           </div>
-
           <div class="form-group">
-            <label for="subject">Subject *</label>
-            <input type="text" id="subject" placeholder="e.g., Internship / Collaboration">
-            <span class="error-msg" id="subject-error"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="message">Message *</label>
-            <textarea id="message" rows="4" placeholder="Write your message here..."></textarea>
+            <textarea id="message" rows="3" placeholder="Your Message"></textarea>
             <span class="error-msg" id="message-error"></span>
           </div>
-
-          <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+          <button type="submit" class="btn">Send</button>
           <div id="form-status" class="status-box"></div>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- FEEDBACK SECTION -->
+  <!-- FEEDBACK -->
   <section id="feedback">
-    <h2>Portfolio Feedback</h2>
-    <div class="card feedback-card">
-      <p>Your feedback helps me improve! Leave a quick rating or suggestion below.</p>
+    <h2>Feedback</h2>
+    <div class="card">
       <form id="feedback-form">
-        <div class="rating-stars">
-          <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-          <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-          <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-          <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-          <span class="star" data-value="5"><i class="fas fa-star"></i></span>
-        </div>
-        <input type="hidden" id="star-rating-val" value="5">
-
-        <div class="form-group" style="margin-top:15px;">
-          <label for="fb-category">Category</label>
-          <select id="fb-category" class="form-control">
-            <option value="Design">UI / UX Design</option>
-            <option value="Projects">Projects & News</option>
-            <option value="General">General Review</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <textarea id="feedback-text" rows="3" placeholder="Write your comments or suggestions here..."></textarea>
-        </div>
-
-        <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Submit Feedback</button>
+        <textarea id="feedback-text" rows="3" placeholder="Leave your feedback here..."></textarea>
+        <button type="submit" class="btn" style="margin-top:10px;">Submit Feedback</button>
         <div id="feedback-status" class="status-box"></div>
       </form>
     </div>
   </section>
 
-  <!-- CUSTOMIZED CHATBOX FOR AKASH ROY -->
+  <!-- AI CHATBOT WIDGET -->
   <div class="chatbox-wrapper">
     <button id="chat-toggle-btn" class="chat-btn">
-      <i class="fas fa-comments"></i>
+      <i class="fas fa-robot"></i>
     </button>
 
     <div id="chat-window" class="chat-window hidden">
       <div class="chat-header">
-        <div class="chat-title">
-          <i class="fas fa-robot"></i> Akash's Assistant
-        </div>
+        <span>Akash's AI Assistant</span>
         <button id="chat-close-btn">&times;</button>
       </div>
       <div id="chat-logs" class="chat-logs">
-        <div class="chat-msg bot-msg">
-          Hi! 👋 I am Akash's personal assistant. How can I help you today? You can ask about his skills, projects, or contact info!
-        </div>
+        <div class="chat-msg bot-msg">Hi! 👋 Ask me about Akash's projects, skills, CGPA, or contact details!</div>
       </div>
       <div class="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Type a message (e.g. projects, email)...">
+        <input type="text" id="chat-input" placeholder="Type a message...">
         <button id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
   </div>
 
-  <footer>© 2026 Akash Roy | Built with HTML, CSS & JavaScript</footer>
+  <footer>© 2026 Akash Roy</footer>
 
+  <!-- SCRIPT IMPORT -->
   <script src="script.js"></script>
 </body>
 </html>
