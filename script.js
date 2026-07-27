@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     themeToggle.addEventListener("click", () => {
       document.body.classList.toggle("light-theme");
       const isLight = document.body.classList.contains("light-theme");
-
+      
       if (themeIcon) {
         themeIcon.className = isLight ? "fas fa-moon" : "fas fa-sun";
       }
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
-
+        
         if (entry.target.id === "metrics" && !animatedCounters) {
           animatedCounters = true;
           counters.forEach(counter => {
@@ -224,71 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     8. DIRECT FEEDBACK FORM SUBMISSION & REAL-TIME LIST RENDER
-     ========================================================================== */
-  const feedbackForm = document.getElementById("feedback-form");
-
-  if (feedbackForm) {
-    feedbackForm.onsubmit = function (e) {
-      e.preventDefault();
-
-      const nameInput = document.getElementById("feedback-name");
-      const textInput = document.getElementById("feedback-text");
-      const statusBox = document.getElementById("feedback-status");
-      const listContainer = document.getElementById("feedback-list");
-
-      const nameVal = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : "Anonymous Visitor";
-      const textVal = textInput ? textInput.value.trim() : "";
-
-      if (!textVal) return false;
-
-      // Create and style new feedback card
-      const card = document.createElement("div");
-      card.className = "card visible";
-      card.style.cssText = "max-width: 650px; margin: 0 auto 1rem auto; padding: 1.2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;";
-
-      const dateStr = new Date().toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric"
-      });
-
-      card.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-          <h4 style="color: var(--accent-color); font-size: 1.05rem;"><i class="fas fa-user-circle"></i> ${escapeHTML(nameVal)}</h4>
-          <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="far fa-clock"></i> ${dateStr}</span>
-        </div>
-        <p style="line-height: 1.5; color: var(--text-color); font-size: 0.95rem;">${escapeHTML(textVal)}</p>
-      `;
-
-      if (listContainer) {
-        listContainer.prepend(card);
-      }
-
-      if (statusBox) {
-        statusBox.style.color = "#10b981";
-        statusBox.textContent = "Thank you! Your feedback has been published below.";
-      }
-
-      feedbackForm.reset();
-      return false;
-    };
-  }
-
-  function escapeHTML(str) {
-    return str.replace(/[&<>'"]/g, 
-      tag => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        "'": '&#39;',
-        '"': '&quot;'
-      }[tag] || tag)
-    );
-  }
-
-  /* ==========================================================================
-     9. AI CHATBOT INTERACTION
+     8. AI CHATBOT INTERACTION
      ========================================================================== */
   const chatToggleBtn = document.getElementById("chat-toggle-btn");
   const chatWindow = document.getElementById("chat-window");
