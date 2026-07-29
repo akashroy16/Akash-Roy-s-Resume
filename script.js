@@ -60,15 +60,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     2. TYPING EFFECT WITH BLINKING CURSOR
+     2. TYPING EFFECT
      ========================================================================== */
   const typingText = document.getElementById("typing-text");
   if (typingText) {
     const roles = [
       "Machine Learning Intern @ FlyRank AI",
-      "Founder @ FALabs (Fyntrix AI Labs)",
+      "Founder & Lead AI Engineer @ FALabs",
       "Software Engineering Student @ DIU",
-      "Harvard ALP Graduate"
+      "Harvard ALP 2026 Graduate"
     ];
     let roleIndex = 0;
     let charIndex = 0;
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     3. DAY AND NIGHT MODE TOGGLE
+     3. THEME TOGGLE
      ========================================================================== */
   const themeToggle = document.getElementById("theme-toggle");
   const themeIcon = document.getElementById("theme-icon");
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     4. SCROLL FADE-IN & COUNTER ANIMATION
+     4. SCROLL ANIMATIONS & COUNTERS
      ========================================================================== */
   const fadeElements = document.querySelectorAll(".fade-in");
   const counters = document.querySelectorAll(".counter");
@@ -200,118 +200,85 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     7. RECENT 10 FEEDBACKS TRACKING (LOCALSTORAGE)
+     7. AI CHATBOT FUNCTIONALITY
      ========================================================================== */
-  const feedbackForm = document.getElementById("feedback-form");
-  const feedbackNameInput = document.getElementById("feedback-name");
-  const feedbackTextInput = document.getElementById("feedback-text");
-  const feedbackStatus = document.getElementById("feedback-status");
-  const feedbackList = document.getElementById("feedback-list");
+  const chatToggleBtn = document.getElementById("chat-toggle-btn");
+  const chatWindow = document.getElementById("chat-window");
+  const chatCloseBtn = document.getElementById("chat-close-btn");
+  const chatLogs = document.getElementById("chat-logs");
+  const chatInput = document.getElementById("chat-input");
+  const chatSendBtn = document.getElementById("chat-send-btn");
 
-  // Prevent HTML injection (XSS protection)
-  function escapeHTML(str) {
-    return str.replace(/[&<>'"]/g, 
-      tag => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        "'": '&#39;',
-        '"': '&quot;'
-      }[tag] || tag)
-    );
-  }
-
-  // Load and render recent feedback entries
-  function loadFeedback() {
-    if (!feedbackList) return;
-
-    let storedFeedbacks = [];
-    try {
-      storedFeedbacks = JSON.parse(localStorage.getItem("portfolio_feedbacks") || "[]");
-    } catch (e) {
-      storedFeedbacks = [];
-    }
-
-    feedbackList.innerHTML = "";
-
-    // If empty, leave a neutral placeholder
-    if (storedFeedbacks.length === 0) {
-      feedbackList.innerHTML = `<p style="text-align: center; color: var(--text-muted, #888); font-size: 0.9rem; padding: 1rem 0;">No feedback yet. Be the first to leave one!</p>`;
-      return;
-    }
-
-    // Keep only the 10 most recent entries
-    const recentFeedbacks = storedFeedbacks.slice(0, 10);
-
-    recentFeedbacks.forEach(data => {
-      const card = document.createElement("div");
-      
-      // Basic styling guaranteed to be visible even if CSS classes fail
-      card.style.background = "var(--bg-secondary, rgba(255, 255, 255, 0.05))";
-      card.style.border = "1px solid var(--border-color, rgba(255, 255, 255, 0.1))";
-      card.style.borderRadius = "8px";
-      card.style.padding = "1rem";
-      card.style.marginBottom = "1rem";
-
-      card.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-          <h4 style="color: var(--accent-color, #00d8ff); font-weight: 600; margin: 0;">${escapeHTML(data.name)}</h4>
-          <span style="font-size: 0.75rem; color: var(--text-muted, #aaa);">${data.date}</span>
-        </div>
-        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color, #fff); margin: 0;">${escapeHTML(data.message)}</p>
-      `;
-
-      feedbackList.appendChild(card);
+  if (chatToggleBtn && chatWindow) {
+    chatToggleBtn.addEventListener("click", () => {
+      chatWindow.classList.toggle("hidden");
+      if (!chatWindow.classList.contains("hidden")) {
+        chatInput.focus();
+      }
     });
   }
 
-  // Handle new feedback submission
-  if (feedbackForm) {
-    feedbackForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const authorName = feedbackNameInput ? feedbackNameInput.value.trim() || "Anonymous Visitor" : "Anonymous Visitor";
-      const messageText = feedbackTextInput ? feedbackTextInput.value.trim() : "";
-
-      if (!messageText) return;
-
-      const newFeedback = {
-        name: authorName,
-        message: messageText,
-        date: new Date().toLocaleDateString()
-      };
-
-      let storedFeedbacks = [];
-      try {
-        storedFeedbacks = JSON.parse(localStorage.getItem("portfolio_feedbacks") || "[]");
-      } catch (e) {
-        storedFeedbacks = [];
-      }
-
-      // Prepend new feedback to top
-      storedFeedbacks.unshift(newFeedback);
-
-      // Keep only top 10 in storage
-      if (storedFeedbacks.length > 10) {
-        storedFeedbacks = storedFeedbacks.slice(0, 10);
-      }
-
-      localStorage.setItem("portfolio_feedbacks", JSON.stringify(storedFeedbacks));
-
-      if (feedbackStatus) {
-        feedbackStatus.style.color = "#10b981";
-        feedbackStatus.textContent = "Thank you! Your feedback has been posted.";
-      }
-
-      feedbackForm.reset();
-      loadFeedback();
-
-      setTimeout(() => {
-        if (feedbackStatus) feedbackStatus.textContent = "";
-      }, 3000);
+  if (chatCloseBtn && chatWindow) {
+    chatCloseBtn.addEventListener("click", () => {
+      chatWindow.classList.add("hidden");
     });
   }
 
-  // Load feedback immediately when script loads
-  loadFeedback();
+  function getBotReply(userText) {
+    const query = userText.toLowerCase();
+
+    if (query.includes("project") || query.includes("repo") || query.includes("fingercanvas")) {
+      return "Akash's featured projects include FingerCanvas (Computer Vision), AI Push-Up Analyzer, DunkinDonut Dashboard (Java), and NLP Audit of Digital Implementation.";
+    } else if (query.includes("skill") || query.includes("stack") || query.includes("language")) {
+      return "Akash specializes in Python, Java, C, Machine Learning, Computer Vision (MediaPipe), Data Analysis, and Git/GitHub.";
+    } else if (query.includes("experience") || query.includes("job") || query.includes("work") || query.includes("falabs")) {
+      return "Akash is currently an ML Intern at FlyRank AI and Founder & Lead AI Engineer at FALabs (Fyntrix AI Labs).";
+    } else if (query.includes("cgpa") || query.includes("education") || query.includes("diu") || query.includes("harvard")) {
+      return "Akash is pursuing B.Sc. in Software Engineering at DIU with a 3.70 CGPA and scored 95/100 in the Harvard-founded Aspire Leadership Program.";
+    } else if (query.includes("contact") || query.includes("email") || query.includes("phone")) {
+      return "You can reach Akash via email at arcairo5800@gmail.com or phone at +8801303704514.";
+    } else if (query.includes("hello") || query.includes("hi") || query.includes("hey")) {
+      return "Hello! How can I assist you today regarding Akash's portfolio?";
+    } else {
+      return "Thanks for reaching out! For detailed inquiries or collaboration opportunities, feel free to drop an email at arcairo5800@gmail.com.";
+    }
+  }
+
+  function sendMessage() {
+    const userText = chatInput.value.trim();
+    if (!userText) return;
+
+    // 1. Render User Message
+    const userMsgDiv = document.createElement("div");
+    userMsgDiv.className = "chat-msg user-msg";
+    userMsgDiv.textContent = userText;
+    chatLogs.appendChild(userMsgDiv);
+
+    chatInput.value = "";
+    chatLogs.scrollTop = chatLogs.scrollHeight;
+
+    // 2. Render Bot Response
+    setTimeout(() => {
+      const botReply = getBotReply(userText);
+      const botMsgDiv = document.createElement("div");
+      botMsgDiv.className = "chat-msg bot-msg";
+      botMsgDiv.textContent = botReply;
+      chatLogs.appendChild(botMsgDiv);
+
+      chatLogs.scrollTop = chatLogs.scrollHeight;
+    }, 400);
+  }
+
+  if (chatSendBtn) {
+    chatSendBtn.addEventListener("click", sendMessage);
+  }
+
+  if (chatInput) {
+    chatInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  }
 });
