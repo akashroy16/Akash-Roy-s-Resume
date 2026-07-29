@@ -215,6 +215,48 @@ document.addEventListener("DOMContentLoaded", () => {
       '"': '&quot;'
     }[tag] || tag));
   }
+  // Persist recent feedbacks (most-recent-first) and render on load
+  const FEEDBACK_KEY = 'recentFeedbacks';
+
+  function loadFeedbacks() {
+    try {
+      const raw = localStorage.getItem(FEEDBACK_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (err) {
+      console.warn('Failed to load feedbacks from localStorage', err);
+      return [];
+    }
+  }
+
+  function saveFeedbacks(arr) {
+    try {
+      localStorage.setItem(FEEDBACK_KEY, JSON.stringify(arr));
+    } catch (err) {
+      console.warn('Failed to save feedbacks to localStorage', err);
+    }
+  }
+
+  function renderFeedbacks() {
+    if (!feedbackList) return;
+    feedbackList.innerHTML = '';
+    const arr = loadFeedbacks();
+    arr.forEach(entry => {
+      const card = document.createElement('div');
+      card.className = 'card visible';
+      card.style.cssText = 'max-width: 650px; margin: 0 auto 1rem auto; padding: 1.2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;';
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <h4 style="color: var(--accent-color); font-size: 1.05rem;"><i class="fas fa-user-circle"></i> ${escapeHTML(entry.name)}</h4>
+          <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="far fa-clock"></i> ${escapeHTML(entry.date)}</span>
+        </div>
+        <p style="line-height: 1.5; color: var(--text-color); font-size: 0.95rem;">${escapeHTML(entry.text)}</p>
+      `;
+      feedbackList.appendChild(card);
+    });
+  }
+
+  // initial render from storage
+  renderFeedbacks();
 
   if (feedbackForm) {
     console.debug('feedbackForm: found');
@@ -237,31 +279,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
       }
 
-      // Build card
-      const card = document.createElement('div');
-      card.className = 'card visible';
-      card.style.cssText = 'max-width: 650px; margin: 0 auto 1rem auto; padding: 1.2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;';
-
       const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-      card.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-          <h4 style="color: var(--accent-color); font-size: 1.05rem;"><i class="fas fa-user-circle"></i> ${escapeHTML(nameVal)}</h4>
-          <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="far fa-clock"></i> ${dateStr}</span>
-        </div>
-        <p style="line-height: 1.5; color: var(--text-color); font-size: 0.95rem;">${escapeHTML(textVal)}</p>
-      `;
-
       if (feedbackList) {
-        feedbackList.prepend(card);
-
-        console.debug('prepended feedback card');
-
-        // Trim to most recent 10
-        while (feedbackList.children.length > 10) {
-          feedbackList.removeChild(feedbackList.lastElementChild);
-        }
-        console.debug('feedbackList children after trim:', feedbackList.children.length);
+        // update storage: keep most-recent-first
+        const current = loadFeedbacks();
+        const entry = { name: nameVal, text: textVal, date: dateStr };
+        current.unshift(entry);
+        if (current.length > 10) current.length = 10; // trim
+        saveFeedbacks(current);
+        renderFeedbacks();
+        console.debug('feedback saved, total:', current.length);
       }
 
       if (feedbackStatus) {
