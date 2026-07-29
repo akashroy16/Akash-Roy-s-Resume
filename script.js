@@ -217,6 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (feedbackForm) {
+    console.debug('feedbackForm: found');
     feedbackForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -225,6 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const nameVal = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Anonymous Visitor';
       const textVal = textInput ? textInput.value.trim() : '';
+
+      console.debug('feedback submit:', { name: nameVal, text: textVal });
 
       if (!textVal) {
         if (feedbackStatus) {
@@ -252,10 +255,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (feedbackList) {
         feedbackList.prepend(card);
 
+        console.debug('prepended feedback card');
+
         // Trim to most recent 10
         while (feedbackList.children.length > 10) {
           feedbackList.removeChild(feedbackList.lastElementChild);
         }
+        console.debug('feedbackList children after trim:', feedbackList.children.length);
       }
 
       if (feedbackStatus) {
