@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     7. LOCAL STORAGE FEEDBACK TRACKING (NO FIREBASE)
+     7. RECENT 10 FEEDBACKS TRACKING (LOCALSTORAGE)
      ========================================================================== */
   const feedbackForm = document.getElementById("feedback-form");
   const feedbackNameInput = document.getElementById("feedback-name");
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const feedbackStatus = document.getElementById("feedback-status");
   const feedbackList = document.getElementById("feedback-list");
 
-  // Helper function to prevent HTML injection attacks (XSS)
+  // Prevent HTML injection (XSS protection)
   function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, 
       tag => ({
@@ -221,42 +221,57 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // Load and display stored feedback from local storage
+  // Load and render recent feedback entries
   function loadFeedback() {
     if (!feedbackList) return;
 
-    const storedFeedbacks = JSON.parse(localStorage.getItem("portfolio_feedbacks") || "[]");
+    let storedFeedbacks = [];
+    try {
+      storedFeedbacks = JSON.parse(localStorage.getItem("portfolio_feedbacks") || "[]");
+    } catch (e) {
+      storedFeedbacks = [];
+    }
+
     feedbackList.innerHTML = "";
 
+    // If empty, leave a neutral placeholder
     if (storedFeedbacks.length === 0) {
-      feedbackList.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">No feedback yet. Be the first to leave one!</p>`;
+      feedbackList.innerHTML = `<p style="text-align: center; color: var(--text-muted, #888); font-size: 0.9rem; padding: 1rem 0;">No feedback yet. Be the first to leave one!</p>`;
       return;
     }
 
-    storedFeedbacks.forEach(data => {
+    // Keep only the 10 most recent entries
+    const recentFeedbacks = storedFeedbacks.slice(0, 10);
+
+    recentFeedbacks.forEach(data => {
       const card = document.createElement("div");
-      card.className = "card";
+      
+      // Basic styling guaranteed to be visible even if CSS classes fail
+      card.style.background = "var(--bg-secondary, rgba(255, 255, 255, 0.05))";
+      card.style.border = "1px solid var(--border-color, rgba(255, 255, 255, 0.1))";
+      card.style.borderRadius = "8px";
+      card.style.padding = "1rem";
       card.style.marginBottom = "1rem";
 
       card.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-          <h4 style="color: var(--accent-color); font-weight: 600;">${escapeHTML(data.name)}</h4>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">${data.date}</span>
+          <h4 style="color: var(--accent-color, #00d8ff); font-weight: 600; margin: 0;">${escapeHTML(data.name)}</h4>
+          <span style="font-size: 0.75rem; color: var(--text-muted, #aaa);">${data.date}</span>
         </div>
-        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color);">${escapeHTML(data.message)}</p>
+        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color, #fff); margin: 0;">${escapeHTML(data.message)}</p>
       `;
 
       feedbackList.appendChild(card);
     });
   }
 
-  // Handle feedback form submission
+  // Handle new feedback submission
   if (feedbackForm) {
     feedbackForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const authorName = feedbackNameInput.value.trim() || "Anonymous Visitor";
-      const messageText = feedbackTextInput.value.trim();
+      const authorName = feedbackNameInput ? feedbackNameInput.value.trim() || "Anonymous Visitor" : "Anonymous Visitor";
+      const messageText = feedbackTextInput ? feedbackTextInput.value.trim() : "";
 
       if (!messageText) return;
 
@@ -266,8 +281,20 @@ document.addEventListener("DOMContentLoaded", () => {
         date: new Date().toLocaleDateString()
       };
 
-      const storedFeedbacks = JSON.parse(localStorage.getItem("portfolio_feedbacks") || "[]");
+      let storedFeedbacks = [];
+      try {
+        storedFeedbacks = JSON.parse(localStorage.getItem("portfolio_feedbacks") || "[]");
+      } catch (e) {
+        storedFeedbacks = [];
+      }
+
+      // Prepend new feedback to top
       storedFeedbacks.unshift(newFeedback);
+
+      // Keep only top 10 in storage
+      if (storedFeedbacks.length > 10) {
+        storedFeedbacks = storedFeedbacks.slice(0, 10);
+      }
 
       localStorage.setItem("portfolio_feedbacks", JSON.stringify(storedFeedbacks));
 
@@ -285,6 +312,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Load feedback on startup
+  // Load feedback immediately when script loads
   loadFeedback();
 });
