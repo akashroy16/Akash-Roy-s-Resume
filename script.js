@@ -200,6 +200,75 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
+     8. FEEDBACK FORM SUBMISSION (CLIENT-SIDE RENDER, KEEP MAX 10)
+     ========================================================================== */
+  const feedbackForm = document.getElementById("feedback-form");
+  const feedbackList = document.getElementById("feedback-list");
+  const feedbackStatus = document.getElementById("feedback-status");
+
+  function escapeHTML(str) {
+    return String(str).replace(/[&<>'"]/g, (tag) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag));
+  }
+
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('feedback-name');
+      const textInput = document.getElementById('feedback-text');
+
+      const nameVal = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Anonymous Visitor';
+      const textVal = textInput ? textInput.value.trim() : '';
+
+      if (!textVal) {
+        if (feedbackStatus) {
+          feedbackStatus.style.color = '#ef4444';
+          feedbackStatus.textContent = 'Please enter feedback before submitting.';
+        }
+        return false;
+      }
+
+      // Build card
+      const card = document.createElement('div');
+      card.className = 'card visible';
+      card.style.cssText = 'max-width: 650px; margin: 0 auto 1rem auto; padding: 1.2rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px;';
+
+      const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <h4 style="color: var(--accent-color); font-size: 1.05rem;"><i class="fas fa-user-circle"></i> ${escapeHTML(nameVal)}</h4>
+          <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="far fa-clock"></i> ${dateStr}</span>
+        </div>
+        <p style="line-height: 1.5; color: var(--text-color); font-size: 0.95rem;">${escapeHTML(textVal)}</p>
+      `;
+
+      if (feedbackList) {
+        feedbackList.prepend(card);
+
+        // Trim to most recent 10
+        while (feedbackList.children.length > 10) {
+          feedbackList.removeChild(feedbackList.lastElementChild);
+        }
+      }
+
+      if (feedbackStatus) {
+        feedbackStatus.style.color = '#10b981';
+        feedbackStatus.textContent = 'Thank you! Your feedback has been published below.';
+      }
+
+      feedbackForm.reset();
+      return false;
+    });
+  }
+
+  /* ==========================================================================
      7. AI CHATBOT FUNCTIONALITY
      ========================================================================== */
   const chatToggleBtn = document.getElementById("chat-toggle-btn");
