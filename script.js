@@ -200,87 +200,104 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     7. CONTACT FORM SUBMISSION
+     7. FIREBASE REALTIME FEEDBACK TRACKING
      ========================================================================== */
-  const contactForm = document.getElementById("contact-form");
-  const formStatus = document.getElementById("form-status");
+  // Initialize Firebase (Replace values below with your Firebase Console config)
+  const firebaseConfig = {
+    apiKey: "YOUR_FIREBASE_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
 
-  if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
+  // Prevent double initialization errors
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const database = firebase.database();
+  const feedbackRef = database.ref("feedbacks");
+
+  const feedbackForm = document.getElementById("feedback-form");
+  const feedbackNameInput = document.getElementById("feedback-name");
+  const feedbackTextInput = document.getElementById("feedback-text");
+  const feedbackStatus = document.getElementById("feedback-status");
+  const feedbackList = document.getElementById("feedback-list");
+
+  // A. Submit Feedback to Firebase
+  if (feedbackForm) {
+    feedbackForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      if (formStatus) {
-        formStatus.style.color = "#00d8ff";
-        formStatus.textContent = "Sending message...";
-      }
+      
+      const authorName = feedbackNameInput.value.trim() || "Anonymous Visitor";
+      const messageText = feedbackTextInput.value.trim();
 
-      setTimeout(() => {
-        if (formStatus) {
-          formStatus.style.color = "#10b981";
-          formStatus.textContent = "Message sent successfully!";
-        }
-        contactForm.reset();
-      }, 1000);
+      if (!messageText) return;
+
+      const newFeedback = {
+        name: authorName,
+        message: messageText,
+        timestamp: Date.now()
+      };
+
+      feedbackRef.push(newFeedback)
+        .then(() => {
+          if (feedbackStatus) {
+            feedbackStatus.style.color = "#10b981";
+            feedbackStatus.textContent = "Thank you! Your feedback has been submitted.";
+          }
+          feedbackForm.reset();
+          setTimeout(() => {
+            if (feedbackStatus) feedbackStatus.textContent = "";
+          }, 3000);
+        })
+        .catch((error) => {
+          console.error("Firebase Error: ", error);
+          if (feedbackStatus) {
+            feedbackStatus.style.color = "#ef4444";
+            feedbackStatus.textContent = "Error submitting feedback. Check Firebase config!";
+          }
+        });
     });
   }
 
-  /* ==========================================================================
-     8. AI CHATBOT INTERACTION
-     ========================================================================== */
-  const chatToggleBtn = document.getElementById("chat-toggle-btn");
-  const chatWindow = document.getElementById("chat-window");
-  const chatCloseBtn = document.getElementById("chat-close-btn");
-  const chatSendBtn = document.getElementById("chat-send-btn");
-  const chatInput = document.getElementById("chat-input");
-  const chatLogs = document.getElementById("chat-logs");
+  // B. Listen for New Feedback and Render Dynamically
+  if (feedbackList) {
+    feedbackRef.on("child_added", (snapshot) => {
+      const data = snapshot.val();
+      
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.marginBottom = "1rem";
 
-  if (chatToggleBtn && chatWindow) {
-    chatToggleBtn.addEventListener("click", () => chatWindow.classList.toggle("hidden"));
-    if (chatCloseBtn) {
-      chatCloseBtn.addEventListener("click", () => chatWindow.classList.add("hidden"));
-    }
+      const dateStr = data.timestamp ? new Date(data.timestamp).toLocaleDateString() : "Just now";
 
-    const handleChat = () => {
-      if (!chatInput) return;
-      const text = chatInput.value.trim();
-      if (!text) return;
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <h4 style="color: var(--accent-color); font-weight: 600;">${escapeHTML(data.name)}</h4>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">${dateStr}</span>
+        </div>
+        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color);">${escapeHTML(data.message)}</p>
+      `;
 
-      appendMessage(text, "user-msg");
-      chatInput.value = "";
+      // Insert newest feedback at the top
+      feedbackList.prepend(card);
+    });
+  }
 
-      setTimeout(() => {
-        const query = text.toLowerCase();
-        let reply = "I can tell you about Akash's projects, internship at FlyRank AI, CGPA (3.70), leadership at Harvard ALP, or contact information!";
-
-        if (query.includes("cgpa") || query.includes("grade") || query.includes("education")) {
-          reply = "Akash is pursuing a B.Sc. in Software Engineering at Daffodil International University with a 3.70 CGPA. He also scored 95/100 in the Harvard-founded Aspire Leadership Program!";
-        } else if (query.includes("project") || query.includes("fingercanvas")) {
-          reply = "Akash has created interactive projects including FingerCanvas (webcam gesture whiteboard), AI Push-Up Analyzer, DunkinDonut Dashboard, and NLP Audit tools.";
-        } else if (query.includes("experience") || query.includes("intern") || query.includes("job")) {
-          reply = "Akash is currently an ML Intern at FlyRank AI and Founder & Lead AI Engineer at FALabs (Fyntrix AI Labs).";
-        } else if (query.includes("contact") || query.includes("email") || query.includes("phone")) {
-          reply = "You can reach Akash via email at arcairo5800@gmail.com or phone at +8801303704514.";
-        } else if (query.includes("certif")) {
-          reply = "Akash holds 79 professional certifications including Ethics of AI (University of Helsinki) and Enterprise Systems (Open University). You can view certificate copies directly in the Certifications section!";
-        }
-
-        appendMessage(reply, "bot-msg");
-      }, 600);
-    };
-
-    if (chatSendBtn) chatSendBtn.addEventListener("click", handleChat);
-    if (chatInput) {
-      chatInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") handleChat();
-      });
-    }
-
-    function appendMessage(msg, className) {
-      if (!chatLogs) return;
-      const msgDiv = document.createElement("div");
-      msgDiv.className = `chat-msg ${className}`;
-      msgDiv.textContent = msg;
-      chatLogs.appendChild(msgDiv);
-      chatLogs.scrollTop = chatLogs.scrollHeight;
-    }
+  // Helper to prevent HTML injection (XSS protection)
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag)
+    );
   }
 });
