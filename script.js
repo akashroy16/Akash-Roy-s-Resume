@@ -200,95 +200,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     7. FIREBASE REALTIME FEEDBACK TRACKING
+     7. LOCAL STORAGE FEEDBACK TRACKING (NO FIREBASE)
      ========================================================================== */
-  // Initialize Firebase (Replace values below with your Firebase Console config)
-  const firebaseConfig = {
-    apiKey: "YOUR_FIREBASE_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-
-  // Prevent double initialization errors
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-
-  const database = firebase.database();
-  const feedbackRef = database.ref("feedbacks");
-
   const feedbackForm = document.getElementById("feedback-form");
   const feedbackNameInput = document.getElementById("feedback-name");
   const feedbackTextInput = document.getElementById("feedback-text");
   const feedbackStatus = document.getElementById("feedback-status");
   const feedbackList = document.getElementById("feedback-list");
 
-  // A. Submit Feedback to Firebase
-  if (feedbackForm) {
-    feedbackForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      
-      const authorName = feedbackNameInput.value.trim() || "Anonymous Visitor";
-      const messageText = feedbackTextInput.value.trim();
-
-      if (!messageText) return;
-
-      const newFeedback = {
-        name: authorName,
-        message: messageText,
-        timestamp: Date.now()
-      };
-
-      feedbackRef.push(newFeedback)
-        .then(() => {
-          if (feedbackStatus) {
-            feedbackStatus.style.color = "#10b981";
-            feedbackStatus.textContent = "Thank you! Your feedback has been submitted.";
-          }
-          feedbackForm.reset();
-          setTimeout(() => {
-            if (feedbackStatus) feedbackStatus.textContent = "";
-          }, 3000);
-        })
-        .catch((error) => {
-          console.error("Firebase Error: ", error);
-          if (feedbackStatus) {
-            feedbackStatus.style.color = "#ef4444";
-            feedbackStatus.textContent = "Error submitting feedback. Check Firebase config!";
-          }
-        });
-    });
-  }
-
-  // B. Listen for New Feedback and Render Dynamically
-  if (feedbackList) {
-    feedbackRef.on("child_added", (snapshot) => {
-      const data = snapshot.val();
-      
-      const card = document.createElement("div");
-      card.className = "card";
-      card.style.marginBottom = "1rem";
-
-      const dateStr = data.timestamp ? new Date(data.timestamp).toLocaleDateString() : "Just now";
-
-      card.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-          <h4 style="color: var(--accent-color); font-weight: 600;">${escapeHTML(data.name)}</h4>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">${dateStr}</span>
-        </div>
-        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color);">${escapeHTML(data.message)}</p>
-      `;
-
-      // Insert newest feedback at the top
-      feedbackList.prepend(card);
-    });
-  }
-
-  // Helper to prevent HTML injection (XSS protection)
+  // Helper function to prevent HTML injection attacks (XSS)
   function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, 
       tag => ({
@@ -300,4 +220,71 @@ document.addEventListener("DOMContentLoaded", () => {
       }[tag] || tag)
     );
   }
+
+  // Load and display stored feedback from local storage
+  function loadFeedback() {
+    if (!feedbackList) return;
+
+    const storedFeedbacks = JSON.parse(localStorage.getItem("portfolio_feedbacks") || "[]");
+    feedbackList.innerHTML = "";
+
+    if (storedFeedbacks.length === 0) {
+      feedbackList.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">No feedback yet. Be the first to leave one!</p>`;
+      return;
+    }
+
+    storedFeedbacks.forEach(data => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.marginBottom = "1rem";
+
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <h4 style="color: var(--accent-color); font-weight: 600;">${escapeHTML(data.name)}</h4>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">${data.date}</span>
+        </div>
+        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color);">${escapeHTML(data.message)}</p>
+      `;
+
+      feedbackList.appendChild(card);
+    });
+  }
+
+  // Handle feedback form submission
+  if (feedbackForm) {
+    feedbackForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const authorName = feedbackNameInput.value.trim() || "Anonymous Visitor";
+      const messageText = feedbackTextInput.value.trim();
+
+      if (!messageText) return;
+
+      const newFeedback = {
+        name: authorName,
+        message: messageText,
+        date: new Date().toLocaleDateString()
+      };
+
+      const storedFeedbacks = JSON.parse(localStorage.getItem("portfolio_feedbacks") || "[]");
+      storedFeedbacks.unshift(newFeedback);
+
+      localStorage.setItem("portfolio_feedbacks", JSON.stringify(storedFeedbacks));
+
+      if (feedbackStatus) {
+        feedbackStatus.style.color = "#10b981";
+        feedbackStatus.textContent = "Thank you! Your feedback has been posted.";
+      }
+
+      feedbackForm.reset();
+      loadFeedback();
+
+      setTimeout(() => {
+        if (feedbackStatus) feedbackStatus.textContent = "";
+      }, 3000);
+    });
+  }
+
+  // Load feedback on startup
+  loadFeedback();
 });
