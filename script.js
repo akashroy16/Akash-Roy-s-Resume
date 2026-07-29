@@ -209,10 +209,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatInput = document.getElementById("chat-input");
   const chatSendBtn = document.getElementById("chat-send-btn");
 
+  // Diagnostics: log presence of chat elements
+  console.debug("chatToggleBtn:", !!chatToggleBtn, "chatWindow:", !!chatWindow, "chatCloseBtn:", !!chatCloseBtn, "chatLogs:", !!chatLogs, "chatInput:", !!chatInput, "chatSendBtn:", !!chatSendBtn);
+
   if (chatToggleBtn && chatWindow) {
     chatToggleBtn.addEventListener("click", () => {
       chatWindow.classList.toggle("hidden");
-      if (!chatWindow.classList.contains("hidden")) {
+      if (!chatWindow.classList.contains("hidden") && chatInput) {
         chatInput.focus();
       }
     });
@@ -245,6 +248,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function sendMessage() {
+    if (!chatInput || !chatLogs) {
+      console.warn('Chat input or logs element missing — aborting sendMessage.');
+      return;
+    }
+
     const userText = chatInput.value.trim();
     if (!userText) return;
 
